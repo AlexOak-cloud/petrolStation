@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "station_table")
 @Builder
-public class Station {
+public class Station<Petrol> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,12 +17,9 @@ public class Station {
     private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "petrol1")
-    private Petrol petrol1;
-    @Column(name = "petrol2")
-    private Petrol petrol2;
-    @Column(name = "petrol3")
-    private Petrol petrol3;
-    @Column(name = "petrol4")
-    private Petrol petrol4;
+    private Petrol[] petrol;
+
+    
+
+
 }

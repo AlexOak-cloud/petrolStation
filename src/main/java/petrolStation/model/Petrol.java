@@ -10,5 +10,4 @@ public class Petrol {
 
     private String name;
     private int price;
-
 }
