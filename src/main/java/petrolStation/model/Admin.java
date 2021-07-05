@@ -1,4 +1,6 @@
 package petrolStation.model;
 
-public class Admin {
+public interface Admin {
+
+
 }

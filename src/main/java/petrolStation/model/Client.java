@@ -1,4 +1,4 @@
 package petrolStation.model;
 
-public class Client {
+public interface Client {
 }

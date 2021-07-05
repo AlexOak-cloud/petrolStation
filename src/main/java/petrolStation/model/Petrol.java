@@ -1,16 +1,9 @@
 package petrolStation.model;
 
-
-import lombok.*;
-
 import javax.persistence.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@ToString
 @Entity
+@Table(name = "tbl_petrol")
 public class Petrol {
 
     @Id
@@ -21,7 +14,25 @@ public class Petrol {
     private String name;
     @Column(name = "price")
     private int price;
+
     public int getId(){
         return id;
+    }
+
+    public Petrol(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Petrol{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
+    public Petrol() {
     }
 }

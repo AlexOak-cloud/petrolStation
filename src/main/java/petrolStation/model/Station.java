@@ -1,16 +1,11 @@
 package petrolStation.model;
 
-import lombok.*;
-
 import javax.persistence.*;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-
-@RequiredArgsConstructor
-@Data
 @Entity
 @Table(name = "station_table")
-@Builder
 public class Station {
 
     @Id
@@ -19,36 +14,11 @@ public class Station {
     private int id;
     @Column(name = "name")
     private String name;
-    private petrolStation.model.Petrol[] petrolList;
-    private int sizeList;
+    private List<Petrol> petrolList = new ArrayList<>();
 
-
-    public Station(int size) {
-        this.petrolList = (petrolStation.model.Petrol[]) new Object[size];
-        this.sizeList = 0;
+    public void add(Petrol petrol) {
+        petrolList.add(petrol);
     }
-
-    public int size() {
-        return sizeList;
-    }
-
-    private void expansion() {
-        if (sizeList + 1 > petrolList.length) {
-            petrolStation.model.Petrol[] tmp =
-                    (petrolStation.model.Petrol[]) new Object[petrolList.length * 2];
-
-            for (int i = 0; i < petrolList.length; i++) {
-                tmp[i] = petrolList[i];
-            }
-            petrolList = tmp;
-        }
-    }
-
-    public void add(petrolStation.model.Petrol petrol) {
-        expansion();
-        petrolList[sizeList + 1] = petrol;
-    }
-
 
     public String getAll(){
         String rtn = "";
@@ -68,19 +38,7 @@ public class Station {
         return p;
     }
 
-    public boolean deleteById(int id){
-        for(petrolStation.model.Petrol tmp : petrolList){
-            if(tmp.getId() == id){
-
-
-
-            }
-
-        }
-
-
-
+    public void deleteById(int id){
+        petrolList.removeIf(tmp -> tmp.getId() == id);
     }
-
-
 }
