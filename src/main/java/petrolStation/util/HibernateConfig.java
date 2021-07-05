@@ -3,16 +3,17 @@ package petrolStation.util;
 
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
+import petrolStation.model.Station;
 
 import java.io.IOException;
 import java.util.Properties;
 
 public class HibernateConfig {
 
-    public static Session getSession(Object o) {
+    public static Session getSession() {
         Configuration configuration = new Configuration();
         configuration.addProperties(getProps());
-        configuration.addAnnotatedClass(o.getClass());
+        configuration.addAnnotatedClass(Station.class);
         return configuration.buildSessionFactory().openSession();
     }
 

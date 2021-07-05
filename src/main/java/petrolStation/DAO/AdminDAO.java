@@ -1,5 +1,6 @@
 package petrolStation.DAO;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -9,9 +10,10 @@ import petrolStation.util.HibernateConfig;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 public class AdminDAO {
 
-    public static final Session session = HibernateConfig.getSession(Station.class);
+    public static final Session session = HibernateConfig.getSession();
 
     public static boolean createStation(Station station) {
         Transaction transaction = session.beginTransaction();
@@ -61,5 +63,11 @@ public class AdminDAO {
             transaction.rollback();
             return false;
         }
+    }
+
+    public static void main(String[] args) {
+        Station station = new Station();
+
+        createStation(station);
     }
 }
