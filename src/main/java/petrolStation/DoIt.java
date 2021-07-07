@@ -6,7 +6,8 @@ import petrolStation.model.Station;
 
 public class DoIt {
     public static void main(String[] args) {
-
+        Station sta = new Station();
+        AdminDAO.createStation(sta);
 
 
     }
