@@ -1,38 +1,30 @@
 package petrolStation.model;
 
+import lombok.*;
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tbl_petrol")
+@Data
+@RequiredArgsConstructor
 public class Petrol {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "id_petrol")
     private int id;
     @Column(name = "name")
     private String name;
     @Column(name = "price")
     private int price;
 
-    public int getId(){
-        return id;
-    }
-
-    public Petrol(String name, int price) {
-        this.name = name;
-        this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return "Petrol{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                '}';
-    }
-
-    public Petrol() {
-    }
+    /**
+     *  Create table tbl_petrol (
+     *  id_petrol int primary key auto_increment,
+     *  name varchar(255) not null,
+     *  price int not null check (price >0));
+     */
 }

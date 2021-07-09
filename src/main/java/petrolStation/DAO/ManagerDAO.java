@@ -10,6 +10,6 @@ import petrolStation.util.HibernateConfig;
 import java.util.Collections;
 import java.util.List;
 
-public class ManagerDao {
+public class ManagerDAO {
 
 }

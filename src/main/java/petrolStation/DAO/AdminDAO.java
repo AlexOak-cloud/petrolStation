@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 import petrolStation.util.HibernateConfig;
 
@@ -13,12 +14,13 @@ import java.util.List;
 @Slf4j
 public class AdminDAO {
 
-    public static final Session session = HibernateConfig.getSession();
+    public static final Session stationSession = HibernateConfig.getSessionStation();
+    public static final Session petrolSession = HibernateConfig.getSessionPetrol();
 
     public static boolean createStation(Station station) {
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = stationSession.beginTransaction();
         try {
-            session.persist(station);
+            stationSession.persist(station);
             transaction.commit();
             return true;
         } catch (Exception ex) {
@@ -28,10 +30,10 @@ public class AdminDAO {
         }
     }
 
-    public static List<Station> getAll() {
-        Transaction transaction = session.beginTransaction();
+    public static List<Station> getAllStation() {
+        Transaction transaction = stationSession.beginTransaction();
         try {
-            Query query = session.createQuery("from Station", Station.class);
+            Query query = stationSession.createQuery("from Station", Station.class);
             List<Station> resultList = (List<Station>) query.getResultList();
             transaction.commit();
             return resultList;
@@ -41,10 +43,10 @@ public class AdminDAO {
         }
     }
 
-    public static Station getById(int id) {
-        Transaction transaction = session.beginTransaction();
+    public static Station getStationById(int id) {
+        Transaction transaction = stationSession.beginTransaction();
         try {
-            Station station = session.get(Station.class, id);
+            Station station = stationSession.get(Station.class, id);
             transaction.commit();
             return station;
         } catch (Exception exception) {
@@ -53,10 +55,10 @@ public class AdminDAO {
         }
     }
 
-    public static boolean delete(Station station) {
-        Transaction transaction = session.beginTransaction();
+    public static boolean deleteStation(Station station) {
+        Transaction transaction = stationSession.beginTransaction();
         try {
-            session.delete(station);
+            stationSession.delete(station);
             transaction.commit();
             return true;
         } catch (Exception ex) {
@@ -65,9 +67,53 @@ public class AdminDAO {
         }
     }
 
-    public static void main(String[] args) {
-        Station station = new Station();
-
-        createStation(station);
+    public static boolean createPetrol(Petrol petrol){
+        Transaction transaction = stationSession.beginTransaction();
+        try{
+            petrolSession.persist(petrol);
+            transaction.commit();
+            return true;
+        } catch (Exception ex){
+            ex.printStackTrace();
+            transaction.rollback();
+            return false;
+        }
     }
+    public static List<Petrol> getAll(){
+        Transaction transaction = petrolSession.beginTransaction();
+        try{
+            Query<Petrol> from_petrol = petrolSession.createQuery("from Petrol", Petrol.class);
+            List<Petrol> resultList = from_petrol.getResultList();
+            transaction.commit();
+            return resultList;
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+    public static Petrol getPetrolById(int id){
+        Transaction transaction = petrolSession.beginTransaction();
+        try{
+            Petrol petrol = petrolSession.get(Petrol.class, id);
+            transaction.commit();
+            return petrol;
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return new Petrol();
+        }
+    }
+
+    public static boolean deletePetrol(Petrol petrol){
+        Transaction transaction = petrolSession.beginTransaction();
+        try{
+            petrolSession.delete(petrol);
+            transaction.commit();
+            return true;
+        } catch (Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+
 }
