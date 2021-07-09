@@ -79,7 +79,7 @@ public class AdminDAO {
             return false;
         }
     }
-    public static List<Petrol> getAll(){
+    public static List<Petrol> getAllPetrol(){
         Transaction transaction = petrolSession.beginTransaction();
         try{
             Query<Petrol> from_petrol = petrolSession.createQuery("from Petrol", Petrol.class);
