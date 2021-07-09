@@ -6,8 +6,11 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
+import petrolStation.util.DBConnector;
 import petrolStation.util.HibernateConfig;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 
@@ -113,5 +116,18 @@ public class AdminDAO {
             ex.printStackTrace();
             return false;
         }
+    }
+    public static void joining(Station station, Petrol... petrol){
+        int id = station.getId();
+        try {
+            Statement statement = DBConnector.getConnection().createStatement();
+            for (int i = 0; i < petrol.length; i++) {
+               statement.executeUpdate("insert into ")
+
+            }
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+
     }
 }

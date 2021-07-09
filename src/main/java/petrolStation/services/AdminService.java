@@ -40,4 +40,6 @@ public class AdminService {
     public static boolean deletePetrol(Petrol petrol){
         return AdminDAO.deletePetrol(petrol);
     }
+
 }
+
