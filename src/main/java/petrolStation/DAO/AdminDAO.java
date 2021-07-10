@@ -129,6 +129,7 @@ public class AdminDAO {
             ex.printStackTrace();
             System.err.println("->->->Ошибка метода AdminDAO.joining()<-<-<-");
             return false;
+
         }
     }
 
@@ -136,12 +137,29 @@ public class AdminDAO {
         StringBuilder builder = new StringBuilder();
         try {
             Statement statement = DBConnector.getConnection().createStatement();
-            builder.append(statement.executeUpdate(String.format()))
+            builder.append(statement.executeUpdate(String.format(SQLQuery.showJoining,stations.getId())));
+            return builder.toString();
         }catch (SQLException ex){
             ex.printStackTrace();
             System.err.println("->->->Ошибка метода AdminDAO.showJoinByStations()<-<-<-");
-
+            return builder.toString();
         }
+    }
 
+    public static boolean deleteAllPetrol(int password){
+        try {
+            if(password == 123) {
+                Statement statement = DBConnector.getConnection().createStatement();
+                statement.executeUpdate(SQLQuery.deleteAllPetrol);
+                return true;
+            }else {
+                System.err.println("Неверный пароль");
+                return false;
+            }
+        }catch (SQLException ex){
+            ex.printStackTrace();
+            System.err.println("->->->Ошибка метода AdminDAO.deleteAllPetrol()<-<-<-");
+            return false;
+        }
     }
 }

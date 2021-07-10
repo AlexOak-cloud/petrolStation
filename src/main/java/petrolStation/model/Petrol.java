@@ -7,18 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tbl_petrol")
 @Data
-@RequiredArgsConstructor
 public class Petrol {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_petrol")
-    private int id;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "price")
-    private int price;
-
     /**
      * Таблица для хранения информации о топливе ->
      *         Create table tbl_petrol (
@@ -32,7 +21,40 @@ public class Petrol {
      *             id_station int,
      *             id_petrol int,
      *             primary key(id_petrol, id_station),
-     *             foreign key(id_station) references tbl_stations(id_station),
-     *             foreign key(id_petrol) references tbl_petrol(id_petrol));
+     *             foreign key(id_station) references tbl_stations(id_station) on delete cascade,
+     *             foreign key(id_petrol) references tbl_petrol(id_petrol) on delete cascade);
      */
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_petrol")
+    private int id;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "price")
+    private int price;
+
+    public int getId() {
+        return id;
+    }
+
+    public Petrol() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Petrol{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
+    public Petrol(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
+
+
 }
