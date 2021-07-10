@@ -23,9 +23,9 @@ public class Station {
      * Create table tbl_stations (
      * id_station int auto_increment primary key,
      * name varchar(255),
-     * <p>
-     * <p>
-     * <p>
+     *
+     *
+     *
      * Таблица для хранения информации о связи топлива и станции ->
      * Create table petrol_and_stations(
      * id_station int,

@@ -8,6 +8,7 @@ import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 import petrolStation.util.DBConnector;
 import petrolStation.util.HibernateConfig;
+import petrolStation.util.SQLQuery;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -117,16 +118,29 @@ public class AdminDAO {
             return false;
         }
     }
-    public static void joining(Station station, Petrol... petrol){
-        int id = station.getId();
+    public static boolean joining(Station station, Petrol... petrol){
         try {
             Statement statement = DBConnector.getConnection().createStatement();
             for (int i = 0; i < petrol.length; i++) {
-               statement.executeUpdate("insert into ")
-
+               statement.executeUpdate(String.format(SQLQuery.forJoining,station.getId(),petrol[i].getId()));
             }
+            return true;
         }catch (SQLException ex){
             ex.printStackTrace();
+            System.err.println("->->->Ошибка метода AdminDAO.joining()<-<-<-");
+            return false;
+        }
+    }
+
+    public static String showJoinByStations(Station stations){
+        StringBuilder builder = new StringBuilder();
+        try {
+            Statement statement = DBConnector.getConnection().createStatement();
+            builder.append(statement.executeUpdate(String.format()))
+        }catch (SQLException ex){
+            ex.printStackTrace();
+            System.err.println("->->->Ошибка метода AdminDAO.showJoinByStations()<-<-<-");
+
         }
 
     }
