@@ -10,6 +10,7 @@ import petrolStation.util.DBConnector;
 import petrolStation.util.HibernateConfig;
 import petrolStation.util.SQLQuery;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collections;
@@ -71,61 +72,64 @@ public class AdminDAO {
         }
     }
 
-    public static boolean createPetrol(Petrol petrol){
+    public static boolean createPetrol(Petrol petrol) {
         Transaction transaction = stationSession.beginTransaction();
-        try{
+        try {
             petrolSession.persist(petrol);
             transaction.commit();
             return true;
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             transaction.rollback();
             return false;
         }
     }
-    public static List<Petrol> getAllPetrol(){
+
+    public static List<Petrol> getAllPetrol() {
         Transaction transaction = petrolSession.beginTransaction();
-        try{
+        try {
             Query<Petrol> from_petrol = petrolSession.createQuery("from Petrol", Petrol.class);
             List<Petrol> resultList = from_petrol.getResultList();
             transaction.commit();
             return resultList;
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return Collections.emptyList();
         }
     }
-    public static Petrol getPetrolById(int id){
+
+    public static Petrol getPetrolById(int id) {
         Transaction transaction = petrolSession.beginTransaction();
-        try{
+        try {
             Petrol petrol = petrolSession.get(Petrol.class, id);
             transaction.commit();
             return petrol;
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return new Petrol();
         }
     }
 
-    public static boolean deletePetrol(Petrol petrol){
+    public static boolean deletePetrol(Petrol petrol) {
         Transaction transaction = petrolSession.beginTransaction();
-        try{
+        try {
             petrolSession.delete(petrol);
             transaction.commit();
             return true;
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }
     }
-    public static boolean joining(Station station, Petrol... petrol){
+
+    public static boolean joining(Station station, Petrol... petrol) {
         try {
             Statement statement = DBConnector.getConnection().createStatement();
             for (int i = 0; i < petrol.length; i++) {
-               statement.executeUpdate(String.format(SQLQuery.forJoining,station.getId(),petrol[i].getId()));
+                statement.executeUpdate(String.format(SQLQuery.forJoining, petrol[i].getId(), station.getId()));
             }
             return true;
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("->->->Ошибка метода AdminDAO.joining()<-<-<-");
             return false;
@@ -133,30 +137,39 @@ public class AdminDAO {
         }
     }
 
-    public static String showJoinByStations(Station stations){
+    public static String showJoinByStations(Station stations) {
         StringBuilder builder = new StringBuilder();
         try {
             Statement statement = DBConnector.getConnection().createStatement();
-            builder.append(statement.executeUpdate(String.format(SQLQuery.showJoining,stations.getId())));
+            ResultSet resultSet = statement.executeQuery(String.format(SQLQuery.showJoining, stations.getId()));
+            System.out.println(stations + ":\n");
+            while (resultSet.next()) {
+                if(resultSet.getString(2) == null ) continue;
+                builder.append("name: ").
+                        append(resultSet.getString(2)).
+                        append(" price: ").
+                        append(resultSet.getString(3)).
+                        append(" ");
+            }
             return builder.toString();
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("->->->Ошибка метода AdminDAO.showJoinByStations()<-<-<-");
             return builder.toString();
         }
     }
 
-    public static boolean deleteAllPetrol(int password){
+    public static boolean deleteAllPetrol(int password) {
         try {
-            if(password == 123) {
+            if (password == 123) {
                 Statement statement = DBConnector.getConnection().createStatement();
                 statement.executeUpdate(SQLQuery.deleteAllPetrol);
                 return true;
-            }else {
+            } else {
                 System.err.println("Неверный пароль");
                 return false;
             }
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("->->->Ошибка метода AdminDAO.deleteAllPetrol()<-<-<-");
             return false;

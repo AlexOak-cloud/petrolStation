@@ -25,16 +25,17 @@ public class DoIt {
 //       List<Station> allStation = AdminDAO.getAllStation();
 //        System.out.println(showList(allStation));
 //        System.out.println(showList(allPetrol));
-        Petrol p = AdminDAO.getPetrolById(4);
-        Petrol p1 = AdminDAO.getPetrolById(7);
+//        Petrol p = AdminDAO.getPetrolById(4);
+//        Petrol p1 = AdminDAO.getPetrolById(7);
         Station s = AdminDAO.getStationById(2);
-        System.out.println(AdminDAO.joining(s, p, p1));
+//        System.out.println(AdminDAO.joining(s, p, p1));
+        System.out.println(AdminDAO.showJoinByStations(s));
 
     }
     public static <T> String showList(List<T> list){
         StringBuilder builder = new StringBuilder();
         for(Object tmp: list){
-            builder.append(tmp + "\n");
+            builder.append(tmp).append("\n");
         }
         return builder.toString();
     }
