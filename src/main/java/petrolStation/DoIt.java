@@ -1,7 +1,6 @@
 package petrolStation;
 
 import petrolStation.DAO.AdminDAO;
-import petrolStation.model.Admin;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 

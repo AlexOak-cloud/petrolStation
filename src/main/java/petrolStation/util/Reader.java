@@ -6,13 +6,26 @@ import java.io.InputStreamReader;
 
 public class Reader {
 
+    public static String readString(String s){
+        System.out.println(s);
+        try (BufferedReader reader =
+                     new BufferedReader(new InputStreamReader(System.in))){
+            return reader.readLine();
+        }catch (IOException ex){
+            ex.printStackTrace();
+            System.err.println("Ошибка метода Reader.readString()");
+            return "";
+        }
+    }
+
     public static String readString(){
         try (BufferedReader reader =
                      new BufferedReader(new InputStreamReader(System.in))){
             return reader.readLine();
         }catch (IOException ex){
             ex.printStackTrace();
-            return "Ошибка метода Reader.readString()";
+            System.err.println("Ошибка метода Reader.readString()");
+            return "";
         }
     }
 
@@ -22,6 +35,7 @@ public class Reader {
             return Integer.parseInt(reader.readLine());
         }catch (IOException ex){
             ex.printStackTrace();
+            System.err.println("Ошибка метода Reader.readInt()");
             return 0;
         }
     }
