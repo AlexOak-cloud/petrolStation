@@ -3,28 +3,12 @@ package petrolStation.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "tbl_petrol")
 @Data
 public class Petrol {
-    /**
-     * Таблица для хранения информации о топливе ->
-     *         Create table tbl_petrol (
-     *             id_petrol int primary key auto_increment,
-     *             name varchar(255) not null,
-     *             price int not null check (price >0));
-     *
-     *
-     * Таблица для хранения информации о связи топлива и станции ->
-     *         Create table petrol_and_stations(
-     *             id_station int,
-     *             id_petrol int,
-     *             primary key(id_petrol, id_station),
-     *             foreign key(id_station) references tbl_stations(id_station) on delete cascade,
-     *             foreign key(id_petrol) references tbl_petrol(id_petrol) on delete cascade);
-     */
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_petrol")
@@ -44,9 +28,7 @@ public class Petrol {
 
     @Override
     public String toString() {
-        return "Petrol{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+        return "Petrol{name='" + name + '\'' +
                 ", price=" + price +
                 '}';
     }
