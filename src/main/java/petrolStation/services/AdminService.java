@@ -1,6 +1,5 @@
 package petrolStation.services;
 
-import javafx.animation.ParallelTransition;
 import petrolStation.DAO.AdminDAO;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
@@ -26,10 +25,6 @@ public class AdminService {
         return AdminDAO.deleteStation(station);
     }
 
-    public static boolean createPetrol(Petrol petrol) {
-        return AdminDAO.createPetrol(petrol);
-    }
-
     public static List<Petrol> getAllPetrol() {
         return AdminDAO.getAllPetrol();
     }
@@ -38,12 +33,16 @@ public class AdminService {
         return AdminDAO.getPetrolById(id);
     }
 
-    public static boolean deletePetrol(Petrol petrol) {
-        return AdminDAO.deletePetrol(petrol);
-    }
-
     public static boolean join(Station s, Petrol... p) {
         return AdminDAO.join(s, p);
+    }
+
+    public static <T> String showList(List<T> list){
+        StringBuilder sb = new StringBuilder();
+        for(Object tmp : list){
+            sb.append(tmp).append("\n");
+        }
+        return sb.toString();
     }
 }
 

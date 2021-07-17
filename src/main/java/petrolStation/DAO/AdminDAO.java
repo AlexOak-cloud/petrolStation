@@ -73,19 +73,6 @@ public class AdminDAO {
         }
     }
 
-    public static boolean createPetrol(Petrol petrol) {
-        Transaction transaction = stationSession.beginTransaction();
-        try {
-            petrolSession.persist(petrol);
-            transaction.commit();
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            transaction.rollback();
-            return false;
-        }
-    }
-
     public static List<Petrol> getAllPetrol() {
         Transaction transaction = petrolSession.beginTransaction();
         try {
@@ -108,18 +95,6 @@ public class AdminDAO {
         } catch (Exception ex) {
             ex.printStackTrace();
             return new Petrol();
-        }
-    }
-
-    public static boolean deletePetrol(Petrol petrol) {
-        Transaction transaction = petrolSession.beginTransaction();
-        try {
-            petrolSession.delete(petrol);
-            transaction.commit();
-            return true;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
         }
     }
 

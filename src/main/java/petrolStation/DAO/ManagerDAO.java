@@ -20,12 +20,20 @@ public class ManagerDAO {
 
 
     public static boolean updatePrice(int price, Petrol petrol) {
-        try (Statement st = DBConnector.getConnection().createStatement()){
-            st.executeUpdate(String.format(SQLQuery.updatePrice,price,petrol.getName()));
+        try (Statement st = DBConnector.getConnection().createStatement()) {
+            st.executeUpdate(String.format(SQLQuery.updatePrice, price, petrol.getName()));
             return true;
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("->->->Ошибка метода ManagerDAO.updatePrice()<-<-<-");
+            return false;
+        }
+    }
+
+    public static boolean checkInt(int check) {
+        if (check > 0) {
+            return true;
+        } else {
             return false;
         }
     }
