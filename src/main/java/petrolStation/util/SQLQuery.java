@@ -2,8 +2,16 @@ package petrolStation.util;
 
 public interface SQLQuery {
 
-    String forJoining = "insert into petrol_and_stations (id_petrol, id_station) values (%d, %d);";
-    String showJoining = "select tbl_petrol.* from tbl_stations left join tbl_petrol on tbl_stations.id_station = %d;";
+    String forJoining = "insert into petrol_station (id_station, id_petrol) values (%d, %d);";
+    String showJoining = "select stations.id, stations.name, petrol.id, petrol.name, petrol.price" +
+            " from petrol_station" +
+            " join petrol " +
+            "on petrol_station.id_petrol=petrol.id " +
+            "join stations " +
+            "on petrol_station.id_station = stations.id " +
+            "where stations.id = %d;";
+//join petrol on petrol_station.id_petrol=petrol.id join stations on petrol_statio
+
     String deleteAllPetrol = "delete from tbl_petrol;";
     String updatePrice = "update petrol set price = ? where name = ?;";
 }

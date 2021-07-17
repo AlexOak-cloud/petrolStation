@@ -10,6 +10,7 @@ import petrolStation.util.DBConnector;
 import petrolStation.util.HibernateConfig;
 import petrolStation.util.SQLQuery;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -88,8 +89,8 @@ public class AdminDAO {
     public static List<Petrol> getAllPetrol() {
         Transaction transaction = petrolSession.beginTransaction();
         try {
-            Query<Petrol> from_petrol = petrolSession.createQuery("from Petrol", Petrol.class);
-            List<Petrol> resultList = from_petrol.getResultList();
+            Query<Petrol> fromPetrol = petrolSession.createQuery("from Petrol", Petrol.class);
+            List<Petrol> resultList = fromPetrol.getResultList();
             transaction.commit();
             return resultList;
         } catch (Exception ex) {
@@ -123,33 +124,32 @@ public class AdminDAO {
     }
 
     public static boolean joining(Station station, Petrol... petrol) {
-        try {
-            Statement statement = DBConnector.getConnection().createStatement();
+        try (Statement statement = DBConnector.getConnection().createStatement()){
             for (int i = 0; i < petrol.length; i++) {
-                statement.executeUpdate(String.format(SQLQuery.forJoining, petrol[i].getId(), station.getId()));
+                statement.executeUpdate(String.format(SQLQuery.forJoining,station.getId(),petrol[i].getId()));
             }
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.err.println("->->->Ошибка метода AdminDAO.joining()<-<-<-");
             return false;
-
         }
     }
 
-    public static String showJoinByStations(Station stations) {
+    public static String showJoinByStations(Station station) {
         StringBuilder builder = new StringBuilder();
-        try {
-            Statement statement = DBConnector.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(String.format(SQLQuery.showJoining, stations.getId()));
-            System.out.println(stations + ":\n");
+        try (Statement statement = DBConnector.getConnection().createStatement()){
+            builder.append(station).append("\n");
+            final ResultSet resultSet = statement.executeQuery(String.format(SQLQuery.showJoining,station.getId()));
             while (resultSet.next()) {
                 if(resultSet.getString(2) == null ) continue;
-                builder.append("name: ").
+                builder.append("Petrol{id=").
                         append(resultSet.getString(2)).
-                        append(" price: ").
+                        append(", name=").
                         append(resultSet.getString(3)).
-                        append(" ");
+                        append(", price=").
+                        append(resultSet.getString(4)).
+                        append("\n");
             }
             return builder.toString();
         } catch (SQLException ex) {

@@ -3,15 +3,15 @@ package petrolStation.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+
 
 @Entity
-@Table(name = "tbl_petrol")
+@Table(name = "petrol")
 @Data
 public class Petrol {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_petrol")
+    @Column(name = "id")
     private int id;
     @Column(name = "name")
     private String name;
@@ -28,8 +28,8 @@ public class Petrol {
 
     @Override
     public String toString() {
-        return "Petrol{name='" + name + '\'' +
-                ", price=" + price +
+        return "Petrol{id=" + id + ", name=" + name +
+        ", price=" + price +
                 '}';
     }
 
