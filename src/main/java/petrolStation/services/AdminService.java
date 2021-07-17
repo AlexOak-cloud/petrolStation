@@ -14,7 +14,7 @@ public class AdminService {
         return AdminDAO.createStation(station);
     }
 
-    public static List<Station> getAll() {
+    public static List<Station> getAllStations() {
         return AdminDAO.getAllStation();
     }
 
@@ -30,16 +30,20 @@ public class AdminService {
         return AdminDAO.createPetrol(petrol);
     }
 
-    public static List<Petrol> getAllPetrol(){
+    public static List<Petrol> getAllPetrol() {
         return AdminDAO.getAllPetrol();
     }
 
-    public static Petrol getPetrolById(int id){
+    public static Petrol getPetrolById(int id) {
         return AdminDAO.getPetrolById(id);
     }
-    public static boolean deletePetrol(Petrol petrol){
+
+    public static boolean deletePetrol(Petrol petrol) {
         return AdminDAO.deletePetrol(petrol);
     }
 
+    public static boolean join(Station s, Petrol... p) {
+        return AdminDAO.join(s, p);
+    }
 }
 

@@ -23,7 +23,10 @@ public class Petrol {
     }
 
     public Petrol() {
+    }
 
+    public String getName(){
+        return name;
     }
 
     @Override

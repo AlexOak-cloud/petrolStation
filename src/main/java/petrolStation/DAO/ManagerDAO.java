@@ -4,6 +4,7 @@ import com.google.protobuf.DescriptorProtos;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 import petrolStation.util.DBConnector;
 import petrolStation.util.HibernateConfig;
@@ -18,23 +19,9 @@ import java.util.List;
 public class ManagerDAO {
 
 
-    //    public static boolean updatePrice(int price, String nameStation) {
-//        try (Statement statement = DBConnector.getConnection().createStatement()) {
-//            statement.executeUpdate(String.format(SQLQuery.updatePrice, price, nameStation));
-//            return true;
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            System.err.println("Ошибка метода ManagerDAO.updatePrice()");
-//            return false;
-//        }
-//    }
-
-    public static boolean updatePrice(int price, String name) {
-        try (PreparedStatement preparedStatement =
-                     DBConnector.getConnection().prepareStatement
-                             (SQLQuery.updatePrice)){
-            preparedStatement.setInt(1,price);
-            preparedStatement.setString(2,name);
+    public static boolean updatePrice(int price, Petrol petrol) {
+        try (Statement st = DBConnector.getConnection().createStatement()){
+            st.executeUpdate(String.format(SQLQuery.updatePrice,price,petrol.getName()));
             return true;
         }catch (SQLException ex){
             ex.printStackTrace();

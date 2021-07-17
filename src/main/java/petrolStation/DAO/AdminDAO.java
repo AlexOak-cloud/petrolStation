@@ -123,7 +123,7 @@ public class AdminDAO {
         }
     }
 
-    public static boolean joining(Station station, Petrol... petrol) {
+    public static boolean join(Station station, Petrol... petrol) {
         try (Statement statement = DBConnector.getConnection().createStatement()){
             for (int i = 0; i < petrol.length; i++) {
                 statement.executeUpdate(String.format(SQLQuery.forJoining,station.getId(),petrol[i].getId()));

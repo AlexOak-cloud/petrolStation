@@ -9,4 +9,5 @@ public interface AdminMassages {
     String addPetrol = "1:Добавить топливо";
     String deletePetrol = "2:Удалить топливо";
     String listPetrol = "3:Список топлива";
+    String selectPetrol = "4:Выбрать топливо";
 }

@@ -13,5 +13,5 @@ public interface SQLQuery {
 //join petrol on petrol_station.id_petrol=petrol.id join stations on petrol_statio
 
     String deleteAllPetrol = "delete from tbl_petrol;";
-    String updatePrice = "update petrol set price = ? where name = ?;";
+    String updatePrice = "update petrol set price = %d where name = %s;";
 }
