@@ -25,14 +25,20 @@ public class Petrol {
     public Petrol() {
     }
 
-    public String getName(){
+    public Petrol(int id, String name, int price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+
+    public String getName() {
         return name;
     }
 
     @Override
     public String toString() {
         return "Petrol{id=" + id + ", name=" + name +
-        ", price=" + price +
+                ", price=" + price +
                 '}';
     }
 
@@ -40,6 +46,23 @@ public class Petrol {
         this.name = name;
         this.price = price;
     }
+
+    /**
+     *        CREATE TABLE petrol ( id INT PRIMARY KEY AUTO_INCREMENT,
+     *                             name VARCHAR(255) NOT NULL,
+     *                             price INT NOT NULL CHECK (price > 0 ))
+     *                             ENGINE = INNODB;
+     *
+     *
+     *        CREATE TABLE petrol_station(id_station INT,
+     *                                    id_petrol INT,
+     *                                    PRIMARY KEY(id_station, id_petrol),
+     *                                    FOREIGN KEY(id_station) REFERENCES stations(id) ON DELETE CASCADE ON UPDATE CASCADE,
+     *                                    FOREIGN KEY(id_petrol) REFERENCES petrol(id) ON DELETE CASCADE ON UPDATE CASCADE)
+     *                                    ENGINE = INNODB ;
+     *
+     *
+     * */
 
 
 }

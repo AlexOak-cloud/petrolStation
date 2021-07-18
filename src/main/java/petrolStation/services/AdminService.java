@@ -1,10 +1,14 @@
 package petrolStation.services;
 
+import petrolStation.Console.AdminMassages;
+import petrolStation.Console.Reader;
 import petrolStation.DAO.AdminDAO;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 public class AdminService {
 
@@ -21,8 +25,17 @@ public class AdminService {
         return AdminDAO.getStationById(id);
     }
 
-    public static boolean deleteStation(Station station) {
-        return AdminDAO.deleteStation(station);
+    public static void deleteStation() {
+        final List<Station> allStation = AdminDAO.getAllStation();
+        System.out.println(showList(allStation));
+        final int id = Reader.readInt("Введите id колонки для удаления");
+        final Station station = AdminDAO.getStationById(id);
+        final boolean b = AdminDAO.deleteStation(station);
+        if (b) {
+            System.out.println(AdminMassages.successfully);
+        } else {
+            System.out.println(AdminMassages.error);
+        }
     }
 
     public static List<Petrol> getAllPetrol() {
@@ -37,9 +50,9 @@ public class AdminService {
         return AdminDAO.join(s, p);
     }
 
-    public static <T> String showList(List<T> list){
+    public static <T> String showList(List<T> list) {
         StringBuilder sb = new StringBuilder();
-        for(Object tmp : list){
+        for (Object tmp : list) {
             sb.append(tmp).append("\n");
         }
         return sb.toString();

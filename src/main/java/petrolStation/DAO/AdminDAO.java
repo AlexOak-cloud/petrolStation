@@ -6,6 +6,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
+import petrolStation.services.AdminService;
 import petrolStation.util.DBConnector;
 import petrolStation.util.HibernateConfig;
 import petrolStation.util.SQLQuery;
@@ -14,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -132,6 +134,30 @@ public class AdminDAO {
             System.err.println("->->->Ошибка метода AdminDAO.showJoinByStations()<-<-<-");
             return builder.toString();
         }
+    }
+
+
+    public static List<Petrol> showJoin(Station station){
+        List<Petrol> rtnList = new ArrayList<>();
+        try(final Statement statement = DBConnector.getConnection().createStatement()) {
+            final ResultSet resultSet = statement.executeQuery(String.format(SQLQuery.showJoining, station.getId()));
+            while (resultSet.next()){
+                Petrol petrol = new Petrol(resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getInt(3));
+                rtnList.add(petrol);
+            }
+            return rtnList;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    public static void main(String[] args) {
+        final Station stationById =AdminDAO.getStationById(17);
+        final List<Petrol> petrol = showJoin(stationById);
+        System.out.println(AdminService.showList(petrol));
     }
 
     public static boolean deleteAllPetrol(int password) {
