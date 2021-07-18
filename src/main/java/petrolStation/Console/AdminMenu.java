@@ -9,32 +9,32 @@ import java.util.List;
 
 public class AdminMenu {
 
-
     public static void adminMenu() {
+        System.out.println(AdminMassages.mainMenu);
+        /*1:Создать станцию
+         2:Список станций
+         3:Выбрать станцию по ID
+         4:Удалить станцию
+         0: Выход*/
         int answer = Reader.readInt();
         while (answer != 0) {
             switch (answer) {
                 case 1:
-                    System.out.println(AdminMassages.createStation);
-                    final String nameStation = Reader.readString(AdminMassages.inputName);
-                    final boolean station = AdminService.createStation(nameStation);
-                    if (station) {
-                        System.out.println(AdminMassages.successfully);
-                    } else {
-                        System.out.println(AdminMassages.error);
-                    }
+                    AdminService.createStation();
+                    adminMenu();
                 case 2:
-                    System.out.println(AdminMassages.allStation + ": \n");
-                    final List<Station> allStations = AdminService.getAllStations();
-                    System.out.println(AdminService.showList(allStations));
+                    System.out.println(AdminService.showList(AdminService.getAllStations()));
+                    adminMenu();
                 case 3:
-//                    selectStation();
-//                case 4:
-
-
+                    final Station station = AdminService.getStationById();
+                    selectStation(station);//Закончить
+                    adminMenu();
+                case 4:
+                    AdminService.deleteStation();
+                    adminMenu();
+                case 0:
+                    MainMenu.mainMenu();
             }
-
-
         }
     }
 
@@ -51,6 +51,7 @@ public class AdminMenu {
                 case 3:
 
 
+
             }
         }
 
@@ -64,7 +65,7 @@ public class AdminMenu {
         final int id = Reader.readInt("Введите id топлива");
         System.out.println(AdminMassages.back);
         if (id == 0) {
-            selectStation(station);
+            selectStation(station);               //?????????? 
         }
         final Petrol petrolById = AdminDAO.getPetrolById(id);
         final boolean join = AdminDAO.join(station, petrolById);

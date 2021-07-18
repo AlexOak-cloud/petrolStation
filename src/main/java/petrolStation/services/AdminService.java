@@ -6,36 +6,30 @@ import petrolStation.DAO.AdminDAO;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Optional;
 
 public class AdminService {
 
-    public static boolean createStation(String name) {
-        Station station = new Station(name);
-        return AdminDAO.createStation(station);
+    public static void createStation() {
+        final String name = Reader.readString(AdminMassages.inputName);
+        AdminDAO.createStation(new Station(name));
     }
 
     public static List<Station> getAllStations() {
         return AdminDAO.getAllStation();
     }
 
-    public static Station getStationById(int id) {
-        return AdminDAO.getStationById(id);
+    public static Station getStationById() {
+        final int idStation = Reader.readInt(AdminMassages.inputIdStation);
+        return AdminDAO.getStationById(idStation);
     }
 
     public static void deleteStation() {
         final List<Station> allStation = AdminDAO.getAllStation();
         System.out.println(showList(allStation));
-        final int id = Reader.readInt("Введите id колонки для удаления");
+        final int id = Reader.readInt("Введите id колонки(станции) для удаления");
         final Station station = AdminDAO.getStationById(id);
-        final boolean b = AdminDAO.deleteStation(station);
-        if (b) {
-            System.out.println(AdminMassages.successfully);
-        } else {
-            System.out.println(AdminMassages.error);
-        }
+        AdminDAO.deleteStation(station);
     }
 
     public static List<Petrol> getAllPetrol() {
