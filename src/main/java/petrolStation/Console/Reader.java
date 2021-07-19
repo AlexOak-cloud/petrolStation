@@ -6,10 +6,12 @@ import java.io.InputStreamReader;
 
 public class Reader {
 
+
+    public static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
     public static String readString(String s){
         System.out.println(s);
-        try (BufferedReader reader =
-                     new BufferedReader(new InputStreamReader(System.in))){
+        try {
             return reader.readLine();
         }catch (IOException ex){
             ex.printStackTrace();
@@ -19,8 +21,7 @@ public class Reader {
     }
 
     public static String readString(){
-        try (BufferedReader reader =
-                     new BufferedReader(new InputStreamReader(System.in))){
+        try {
             return reader.readLine();
         }catch (IOException ex){
             ex.printStackTrace();
@@ -30,8 +31,7 @@ public class Reader {
     }
 
     public static int readInt(){
-        try(BufferedReader reader =
-                    new BufferedReader(new InputStreamReader(System.in))){
+        try{
             return Integer.parseInt(reader.readLine());
         }catch (IOException ex){
             ex.printStackTrace();
@@ -41,8 +41,7 @@ public class Reader {
     }
     public static int readInt(String s){
         System.out.println(s);
-        try(BufferedReader reader =
-                    new BufferedReader(new InputStreamReader(System.in))){
+        try{
             return Integer.parseInt(reader.readLine());
         }catch (IOException ex){
             ex.printStackTrace();

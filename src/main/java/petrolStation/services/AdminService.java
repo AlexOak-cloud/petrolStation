@@ -40,8 +40,24 @@ public class AdminService {
         return AdminDAO.getPetrolById(id);
     }
 
-    public static boolean join(Station s, Petrol... p) {
-        return AdminDAO.join(s, p);
+
+    public static void join(Station s) {
+        final List<Petrol> allPetrol = AdminDAO.getAllPetrol();
+        final int id = Reader.readInt("Введите id топлива для добавления");
+        final Petrol petrolById = AdminDAO.getPetrolById(id);
+        AdminDAO.join(s,petrolById);
+    }
+
+    public static void showJoin(Station s) {
+        System.out.println(showList(AdminDAO.showJoin(s)));
+    }
+
+
+
+    public static void deletePetrol(Station s){
+        System.out.println(showList(AdminDAO.showJoin(s)));
+        final int id = Reader.readInt("Введите id топлива для его удаления");
+        AdminDAO.deletePetrol(s,id);
     }
 
     public static <T> String showList(List<T> list) {
@@ -51,5 +67,8 @@ public class AdminService {
         }
         return sb.toString();
     }
+
+
+
 }
 

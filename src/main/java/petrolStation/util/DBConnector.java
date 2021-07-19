@@ -3,10 +3,12 @@ package petrolStation.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DBConnector {
 
     private static Connection connection;
+    private static Statement statement;
 
     public static Connection getConnection() {
         if (connection == null) {
@@ -22,5 +24,16 @@ public class DBConnector {
             }
         }
         return connection;
+    }
+
+    public static Statement getStatement(){
+        if(statement == null){
+            try {
+                statement = DBConnector.getConnection().createStatement();
+            } catch (SQLException ex){
+                ex.printStackTrace();
+            }
+        }
+        return statement;
     }
 }

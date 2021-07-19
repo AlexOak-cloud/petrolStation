@@ -1,5 +1,7 @@
 package petrolStation.testSpace;
 
+import petrolStation.Console.AdminMenu;
+import petrolStation.DAO.AdminDAO;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
@@ -7,11 +9,7 @@ import java.util.List;
 
 public class TestSpace {
     public static void main(String[] args) {
-        Petrol petrol = new Petrol("92", 23);
-        Petrol petrol1 = new Petrol("95", 25);
-        Petrol petrol2 = new Petrol("98", 27);
-        Station s = new Station("1");
-
+        AdminMenu.adminMenu();
 
     }
 

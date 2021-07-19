@@ -28,7 +28,6 @@ public class DoIt {
 //        Petrol p1 = AdminDAO.getPetrolById(7);
         Station s = AdminDAO.getStationById(2);
 //        System.out.println(AdminDAO.joining(s, p, p1));
-        System.out.println(AdminDAO.showJoinByStations(s));
 
     }
     public static <T> String showList(List<T> list){

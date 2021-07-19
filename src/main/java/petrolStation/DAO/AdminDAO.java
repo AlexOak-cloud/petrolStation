@@ -99,9 +99,10 @@ public class AdminDAO {
     }
 
     public static boolean join(Station station, Petrol... petrol) {
-        try (Statement statement = DBConnector.getConnection().createStatement()){
+        try {
             for (Petrol value : petrol) {
-                statement.executeUpdate(String.format(SQLQuery.forJoining, station.getId(), value.getId()));
+                DBConnector.getStatement().executeUpdate
+                        (String.format(SQLQuery.forJoining, station.getId(), value.getId()));
             }
             return true;
         } catch (SQLException ex) {
@@ -111,34 +112,11 @@ public class AdminDAO {
         }
     }
 
-//    public static String showJoinByStations(Station station) {
-//        StringBuilder builder = new StringBuilder();
-//        try (Statement statement = DBConnector.getConnection().createStatement()){
-//            builder.append(station).append("\n");
-//            final ResultSet resultSet = statement.executeQuery(String.format(SQLQuery.showJoining,station.getId()));
-//            while (resultSet.next()) {
-//                if(resultSet.getString(2) == null ) continue;
-//                builder.append("Petrol{id=").
-//                        append(resultSet.getString(2)).
-//                        append(", name=").
-//                        append(resultSet.getString(3)).
-//                        append(", price=").
-//                        append(resultSet.getString(4)).
-//                        append("\n");
-//            }
-//            return builder.toString();
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            System.err.println("->->->Ошибка метода AdminDAO.showJoinByStations()<-<-<-");
-//            return builder.toString();
-//        }
-//    }
-
 
     public static List<Petrol> showJoin(Station station){
         List<Petrol> rtnList = new ArrayList<>();
-        try(final Statement statement = DBConnector.getConnection().createStatement()){
-            final ResultSet resultSet = statement.executeQuery
+        try{
+            final ResultSet resultSet = DBConnector.getStatement().executeQuery
                     (String.format(SQLQuery.showPetrolByStation,station.getId()));
             while(resultSet.next()){
                 Petrol p = new Petrol(resultSet.getInt(1),
@@ -153,5 +131,11 @@ public class AdminDAO {
         }
     }
 
-
+    public static void deletePetrol(Station s,int idPetrol){
+        try{
+            DBConnector.getStatement().executeUpdate(String.format(SQLQuery.deletePetrol,s.getId(),idPetrol));
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
 }
