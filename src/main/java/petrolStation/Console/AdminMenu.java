@@ -50,6 +50,8 @@ public class AdminMenu {
                 case 4:
                     AdminService.deleteStation();
                     selectStation(station);
+                case 0:
+                    adminMenu();
             }
         }
     }

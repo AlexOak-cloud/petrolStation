@@ -16,7 +16,7 @@ public interface SQLQuery {
             "JOIN petrol_station " +
             "ON petrol.id = petrol_station.id_petrol " +
             "WHERE petrol_station.id_station = %d;";
-
+    String petrolByName = "SELECT * FROM petrol WHERE NAME = %s;";
 
 
     String deleteAllPetrol = "delete from tbl_petrol;";

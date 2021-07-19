@@ -3,6 +3,7 @@ package petrolStation.services;
 import petrolStation.Console.AdminMassages;
 import petrolStation.Console.Reader;
 import petrolStation.DAO.AdminDAO;
+import petrolStation.DAO.ManagerDAO;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
@@ -42,7 +43,7 @@ public class AdminService {
 
 
     public static void join(Station s) {
-        final List<Petrol> allPetrol = AdminDAO.getAllPetrol();
+        System.out.println(showList(AdminDAO.getAllPetrol()));
         final int id = Reader.readInt("Введите id топлива для добавления");
         final Petrol petrolById = AdminDAO.getPetrolById(id);
         AdminDAO.join(s,petrolById);
@@ -59,6 +60,8 @@ public class AdminService {
         final int id = Reader.readInt("Введите id топлива для его удаления");
         AdminDAO.deletePetrol(s,id);
     }
+
+
 
     public static <T> String showList(List<T> list) {
         StringBuilder sb = new StringBuilder();
