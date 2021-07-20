@@ -1,6 +1,5 @@
 package petrolStation.util;
 
-
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import petrolStation.model.Petrol;

@@ -1,13 +1,9 @@
 package petrolStation.model;
 
-import lombok.*;
-
 import javax.persistence.*;
-
 
 @Entity
 @Table(name = "petrol")
-@Data
 public class Petrol {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,11 +14,26 @@ public class Petrol {
     @Column(name = "price")
     private int price;
 
+
     public int getId() {
         return id;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
     public Petrol() {
+    }
+
+    public Petrol(String name, int price) {
+        this.name = name;
+        this.price = price;
     }
 
     public Petrol(int id, String name, int price) {
@@ -31,9 +42,6 @@ public class Petrol {
         this.price = price;
     }
 
-    public String getName() {
-        return name;
-    }
 
     @Override
     public String toString() {
@@ -42,27 +50,21 @@ public class Petrol {
                 '}';
     }
 
-    public Petrol(String name, int price) {
-        this.name = name;
-        this.price = price;
-    }
 
-    /**
+    /**Таблица для хранения информации о видах топлива и ценах ->
      *        CREATE TABLE petrol ( id INT PRIMARY KEY AUTO_INCREMENT,
      *                             name VARCHAR(255) NOT NULL,
      *                             price INT NOT NULL CHECK (price > 0 ))
      *                             ENGINE = INNODB;
      *
-     *
+     *Таблица для хранения информации о связи станций с видами топлива ->
      *        CREATE TABLE petrol_station(id_station INT,
      *                                    id_petrol INT,
      *                                    PRIMARY KEY(id_station, id_petrol),
      *                                    FOREIGN KEY(id_station) REFERENCES stations(id) ON DELETE CASCADE ON UPDATE CASCADE,
      *                                    FOREIGN KEY(id_petrol) REFERENCES petrol(id) ON DELETE CASCADE ON UPDATE CASCADE)
      *                                    ENGINE = INNODB ;
-     *
-     *
-     * */
+     */
 
 
 }

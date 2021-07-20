@@ -12,7 +12,6 @@ import petrolStation.util.SQLQuery;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,23 +22,24 @@ public class AdminDAO {
     public static final Session stationSession = HibernateConfig.getSessionStation();
     public static final Session petrolSession = HibernateConfig.getSessionPetrol();
 
-    public static boolean createStation(Station station) {
+
+    public static void createStation(Station station) {
         Transaction transaction = stationSession.beginTransaction();
         try {
             stationSession.persist(station);
             transaction.commit();
-            return true;
         } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
-            return false;
         }
     }
+
 
     public static List<Station> getAllStation() {
         Transaction transaction = stationSession.beginTransaction();
         try {
-            Query<Station> query = stationSession.createQuery("from Station", Station.class);
+            Query<Station> query = stationSession.createQuery
+                    ("from Station", Station.class);
             List<Station> resultList = query.getResultList();
             transaction.commit();
             return resultList;
@@ -48,6 +48,7 @@ public class AdminDAO {
             return Collections.emptyList();
         }
     }
+
 
     public static Station getStationById(int id) {
         Transaction transaction = stationSession.beginTransaction();
@@ -61,22 +62,23 @@ public class AdminDAO {
         }
     }
 
-    public static boolean deleteStation(Station station) {
+
+    public static void deleteStation(Station station) {
         Transaction transaction = stationSession.beginTransaction();
         try {
             stationSession.delete(station);
             transaction.commit();
-            return true;
         } catch (Exception ex) {
             transaction.rollback();
-            return false;
         }
     }
+
 
     public static List<Petrol> getAllPetrol() {
         Transaction transaction = petrolSession.beginTransaction();
         try {
-            Query<Petrol> fromPetrol = petrolSession.createQuery("from Petrol", Petrol.class);
+            Query<Petrol> fromPetrol = petrolSession.createQuery
+                    ("from Petrol", Petrol.class);
             List<Petrol> resultList = fromPetrol.getResultList();
             transaction.commit();
             return resultList;
@@ -85,6 +87,7 @@ public class AdminDAO {
             return Collections.emptyList();
         }
     }
+
 
     public static Petrol getPetrolById(int id) {
         Transaction transaction = petrolSession.beginTransaction();
@@ -98,27 +101,26 @@ public class AdminDAO {
         }
     }
 
-    public static boolean join(Station station, Petrol... petrol) {
+
+    public static void join(Station station, Petrol... petrol) {
         try {
             for (Petrol value : petrol) {
                 DBConnector.getStatement().executeUpdate
                         (String.format(SQLQuery.forJoining, station.getId(), value.getId()));
             }
-            return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.err.println("->->->Ошибка метода AdminDAO.joining()<-<-<-");
-            return false;
+            System.err.println("Ошибка метода AdminDAO.joining()");
         }
     }
 
 
-    public static List<Petrol> showJoin(Station station){
+    public static List<Petrol> showJoin(Station station) {
         List<Petrol> rtnList = new ArrayList<>();
-        try{
+        try {
             final ResultSet resultSet = DBConnector.getStatement().executeQuery
-                    (String.format(SQLQuery.showPetrolByStation,station.getId()));
-            while(resultSet.next()){
+                    (String.format(SQLQuery.showPetrolByStation, station.getId()));
+            while (resultSet.next()) {
                 Petrol p = new Petrol(resultSet.getInt(1),
                         resultSet.getString(2),
                         resultSet.getInt(3));
@@ -131,11 +133,15 @@ public class AdminDAO {
         }
     }
 
-    public static void deletePetrol(Station s,int idPetrol){
-        try{
-            DBConnector.getStatement().executeUpdate(String.format(SQLQuery.deletePetrol,s.getId(),idPetrol));
+
+    public static void deletePetrol(Station s, int idPetrol) {
+        try {
+            DBConnector.getStatement().executeUpdate
+                    (String.format(SQLQuery.deletePetrol, s.getId(), idPetrol));
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
     }
+
+
 }

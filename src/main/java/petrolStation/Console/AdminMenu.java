@@ -22,7 +22,7 @@ public class AdminMenu {
                     adminMenu();
                 case 3:
                     final Station station = AdminService.getStationById();
-                    selectStation(station);//Закончить
+                    selectStation(station);
                     adminMenu();
                 case 4:
                     AdminService.deleteStation();

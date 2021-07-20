@@ -1,15 +1,11 @@
 package petrolStation.testSpace;
 
-import petrolStation.Console.AdminMenu;
-import petrolStation.DAO.AdminDAO;
-import petrolStation.model.Petrol;
-import petrolStation.model.Station;
-
 import java.util.List;
 
 public class TestSpace {
     public static void main(String[] args) {
-        AdminMenu.adminMenu();
+
+
 
     }
 

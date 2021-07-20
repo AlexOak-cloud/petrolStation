@@ -1,5 +1,6 @@
 package petrolStation.services;
 
+import petrolStation.Console.ManagerMenu;
 import petrolStation.Console.Reader;
 import petrolStation.DAO.AdminDAO;
 import petrolStation.DAO.ManagerDAO;
@@ -12,29 +13,72 @@ public class ManagerService {
 
     public static void updatePetrolPrice() {
         System.out.println(AdminService.showList(AdminDAO.getAllPetrol()));
-        final int id = Reader.readInt("Введите id топлива для изменения стоимости");
+        final int id = Reader.readInt
+                ("Выберите номер топлива для изменения стоимости", 18, 21);
         final int price = Reader.readInt("Введите новую стоимость");
-        if(!checkInt(price)){
-            System.out.println("Ошибка: введена отрицательная сумма");//Исправить логику для отмены операции
-            updatePetrolPrice();
-        }
-        final Petrol petrolById = AdminDAO.getPetrolById(id);
-        ManagerDAO.updatePrice(price, petrolById);
+        final Petrol petrol = AdminDAO.getPetrolById(id);
+        ManagerDAO.updatePrice(price, petrol);
     }
 
-    public static boolean checkInt(int check) {
-        if (check > 0) {
-            return true;
-        } else {
-            return false;
+
+    public static Petrol selectPetrol() {
+        final List<Petrol> allPetrol = AdminDAO.getAllPetrol();
+        int number = 1;
+        for (Petrol tmp : allPetrol) {
+            System.out.println(number + ": " + tmp.getName() +
+                    ", price - " + tmp.getPrice());
+            number++;
+        }
+        final int select = Reader.readInt
+                ("Выберите номер топлива", 1, 4);
+        switch (select) {
+            case 1:
+                return allPetrol.get(0);
+            case 2:
+                return allPetrol.get(1);
+            case 3:
+                return allPetrol.get(2);
+            case 4:
+                return allPetrol.get(3);
+            default:
+                return new Petrol();
         }
     }
 
-    public static void calcPrice(){
-        final int sum = Reader.readInt("Введите сумму для запраки");
-        final String petrolName = Reader.readString("Введите название топлива");
+
+    public static void newOrderBySum() {
+        final Petrol petrol = selectPetrol();
+        final int sum = Reader.readInt("Введите сумму для заправки");
+        System.out.println("Колличество топлива = " +
+                sum / petrol.getPrice() + "л");
+    }
 
 
-        ManagerDAO.calcPrice(sum,idPetrol);
+    public static void newOrderByQuantity() {
+        final Petrol petrol = selectPetrol();
+        final int quantity = Reader.readInt
+                ("Введите колличество топлива для завпраки (л)");
+        System.out.println("Сумма к оплате " +
+                petrol.getPrice() + quantity + " р");
+    }
+
+
+    public static void newOrder() {
+        final Petrol petrol = selectPetrol();
+        final int answer = Reader.readInt
+                ("1:Ввести сумму для заправкм\n" +
+                                "2: Ввести колличестов топлива для заправки",
+                        1, 2);
+        switch (answer) {
+            case 1:
+                newOrderBySum();
+            case 2:
+                newOrderByQuantity();
+        }
+    }
+
+
+    public static void cancallations() {
+        ManagerMenu.managerMenu();
     }
 }

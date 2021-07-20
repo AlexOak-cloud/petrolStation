@@ -1,12 +1,11 @@
 package petrolStation.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
 
 @Entity
 @Table(name = "stations")
 public class Station {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -15,17 +14,18 @@ public class Station {
     private String name;
 
 
-    public Station(String name) {
-        this.name = name;
+    public Station() {
     }
 
-    public Station() {
+    public Station(String name) {
+        this.name = name;
     }
 
 
     public int getId() {
         return id;
     }
+
 
     @Override
     public String toString() {
@@ -36,13 +36,13 @@ public class Station {
     }
 
 
-    /**
+    /**Таблица для хранения информации о заправочных станциях (колонках) ->
      *       CREATE TABLES stations ( id INT PRIMARY KEY AUTO_INCREMENT,
      *                               name VARCHAR(255)NOT NULL )
      *                               ENGINE=INNODB;
      *
      *
-     *
+     *Таблица для хранения информации о связи станций с видами топлива ->
      *       CREATE TABLE petrol_station(id_station INT,
      *                                    id_petrol INT,
      *                                    PRIMARY KEY(id_station, id_petrol),
