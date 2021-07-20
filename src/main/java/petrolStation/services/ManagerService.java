@@ -1,7 +1,7 @@
 package petrolStation.services;
 
-import petrolStation.Console.ManagerMenu;
-import petrolStation.Console.Reader;
+import petrolStation.console.ManagerMenu;
+import petrolStation.console.Reader;
 import petrolStation.DAO.AdminDAO;
 import petrolStation.DAO.ManagerDAO;
 import petrolStation.model.Petrol;

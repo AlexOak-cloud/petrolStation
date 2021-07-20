@@ -1,16 +1,13 @@
-package petrolStation.Console;
+package petrolStation.console;
 
-import petrolStation.DAO.AdminDAO;
-import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 import petrolStation.services.AdminService;
-
-import java.util.List;
 
 public class AdminMenu {
 
     public static void adminMenu() {
-        System.out.println(AdminMassages.mainMenu);
+        System.out.println
+                ("1:Создать станцию\n2:Список станций\n3:Выбрать станцию\n4:Удалить станцию\n0: Выход");
         int answer = Reader.readInt();
         while (answer != 0) {
             switch (answer) {
@@ -34,7 +31,8 @@ public class AdminMenu {
     }
 
     public static void selectStation(Station station) {
-        System.out.println(AdminMassages.selectMenu);
+        System.out.println
+                ("1:Список топлива\n2:Добавить топливо\n3:Удалить топливо\n4:Удалить станцию\n0: Выход");
         int answer = Reader.readInt();
         while (answer != 0) {
             switch (answer) {

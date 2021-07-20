@@ -1,7 +1,6 @@
 package petrolStation.services;
 
-import petrolStation.Console.AdminMassages;
-import petrolStation.Console.Reader;
+import petrolStation.console.Reader;
 import petrolStation.DAO.AdminDAO;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
@@ -12,7 +11,7 @@ public class AdminService {
 
 
     public static void createStation() {
-        final String name = Reader.readString(AdminMassages.inputName);
+        final String name = Reader.readString("Введите имя/номер новой станции");
         AdminDAO.createStation(new Station(name));
     }
 
@@ -21,17 +20,28 @@ public class AdminService {
         return AdminDAO.getAllStation();
     }
 
+    public static void showAllStation() {
+        final List<Station> allStations = getAllStations();
+        int number = 1;
+        for (Station tmp : allStations) {
+            System.out.println(number + ": " + tmp);
+            number++;
+        }
+    }
 
     public static Station getStationById() {
-        final int idStation = Reader.readInt(AdminMassages.inputIdStation);
-        return AdminDAO.getStationById(idStation);
+        showAllStation();
+        final List<Station> allStations = getAllStations();
+        final int idStation = Reader.readInt("Выберите номер станции", 1, allStations.size() + 1);
+        return allStations.get(idStation - 1);
     }
 
 
     public static void deleteStation() {
         final List<Station> allStation = AdminDAO.getAllStation();
         System.out.println(showList(allStation));
-        final int id = Reader.readInt("Введите id колонки(станции) для удаления");
+        final int id = Reader.readInt("Введите id колонки(станции) для удаления",
+                1, allStation.size() + 1);
         final Station station = AdminDAO.getStationById(id);
         AdminDAO.deleteStation(station);
     }
@@ -46,8 +56,10 @@ public class AdminService {
     }
 
 
-    public static void showJoin(Station s) {
+
+    public static List<Petrol> showJoin(Station s) {
         System.out.println(showList(AdminDAO.showJoin(s)));
+        return AdminDAO.showJoin(s);
     }
 
 
@@ -61,10 +73,13 @@ public class AdminService {
 
     public static <T> String showList(List<T> list) {
         StringBuilder sb = new StringBuilder();
+        int number = 1;
         for (Object tmp : list) {
-            sb.append(tmp).append("\n");
+            sb.append(1).append("\n");
         }
         return sb.toString();
     }
+
+
 }
 

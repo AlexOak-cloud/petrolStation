@@ -1,4 +1,4 @@
-package petrolStation.Console;
+package petrolStation.console;
 
 import java.io.BufferedReader;
 import java.io.IOException;

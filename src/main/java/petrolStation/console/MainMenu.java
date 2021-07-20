@@ -1,4 +1,4 @@
-package petrolStation.Console;
+package petrolStation.console;
 
 import petrolStation.util.DBConnector;
 
@@ -8,7 +8,8 @@ import java.sql.SQLException;
 public class MainMenu {
 
     public static void mainMenu() {
-        System.out.println(MainMenuMassages.mainMenu);
+        System.out.println
+                ("1: Администратор\n2: Менеджер\n3: Клиент\n4:Выход");
         final int answer = Reader.readInt();
         while (answer != 0) {
             switch (answer) {
