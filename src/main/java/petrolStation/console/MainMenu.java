@@ -15,9 +15,13 @@ public class MainMenu {
             switch (answer) {
                 case 1:
                     AdminMenu.adminMenu();
+                    mainMenu();
                 case 2:
                     ManagerMenu.managerMenu();
-
+                    mainMenu();
+                case 3:
+                    ClientMenu.clientMenu();
+                    mainMenu();
                 case 0:
                     try {
                         Reader.reader.close();

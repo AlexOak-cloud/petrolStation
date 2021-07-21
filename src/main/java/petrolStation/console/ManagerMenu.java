@@ -14,7 +14,7 @@ public class ManagerMenu {
                     ManagerService.newOrder();
                     managerMenu();
                 case 2:
-                    ManagerService.cancallations();
+                    ManagerService.deleteOrder();
                     managerMenu();
                 case 3:
                     ManagerService.updatePetrolPrice();

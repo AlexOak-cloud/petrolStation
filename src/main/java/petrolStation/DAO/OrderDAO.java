@@ -6,9 +6,6 @@ import org.hibernate.query.Query;
 import petrolStation.model.Order;
 import petrolStation.util.HibernateConfig;
 
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import java.sql.SQLException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

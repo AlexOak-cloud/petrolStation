@@ -1,11 +1,14 @@
 package petrolStation.services;
 
+import petrolStation.DAO.OrderDAO;
 import petrolStation.console.ManagerMenu;
 import petrolStation.console.Reader;
 import petrolStation.DAO.AdminDAO;
 import petrolStation.DAO.ManagerDAO;
+import petrolStation.model.Order;
 import petrolStation.model.Petrol;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ManagerService {
@@ -46,20 +49,20 @@ public class ManagerService {
     }
 
 
-    public static void newOrderBySum() {
-        final Petrol petrol = selectPetrol();
+    public static int newOrderBySum(Petrol petrol) {
         final int sum = Reader.readInt("Введите сумму для заправки");
         System.out.println("Колличество топлива = " +
                 sum / petrol.getPrice() + "л");
+        return sum;
     }
 
 
-    public static void newOrderByQuantity() {
-        final Petrol petrol = selectPetrol();
+    public static int newOrderByQuantity(Petrol petrol) {
         final int quantity = Reader.readInt
                 ("Введите колличество топлива для завпраки (л)");
         System.out.println("Сумма к оплате " +
                 petrol.getPrice() + quantity + " р");
+        return quantity;
     }
 
 
@@ -69,16 +72,20 @@ public class ManagerService {
                 ("1:Ввести сумму для заправкм\n" +
                                 "2: Ввести колличестов топлива для заправки",
                         1, 2);
-        switch (answer) {
-            case 1:
-                newOrderBySum();
-            case 2:
-                newOrderByQuantity();
+        if (answer == 1) {
+            final int sum = newOrderBySum(petrol);
+            OrderDAO.add(new Order(petrol.getName(), sum, sum / petrol.getPrice(), LocalDateTime.now()));
+        } else if (answer == 2) {
+            final int quantity = newOrderByQuantity(petrol);
+            OrderDAO.add(new Order(petrol.getName(), quantity * petrol.getPrice(), quantity, LocalDateTime.now()));
         }
     }
 
 
-    public static void cancallations() {
-        ManagerMenu.managerMenu();
+    public static void deleteOrder() {
+        final List<Order> orders = OrderService.showOrders();
+        final int number = Reader.readInt
+                ("Введите номер заказа для его удаления", 1, orders.size() + 1);
+        OrderDAO.deleteOrder(orders.get(number-1));
     }
 }
