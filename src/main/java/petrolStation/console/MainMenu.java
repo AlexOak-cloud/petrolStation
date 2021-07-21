@@ -9,7 +9,7 @@ public class MainMenu {
 
     public static void mainMenu() {
         System.out.println
-                ("1: Администратор\n2: Менеджер\n3: Клиент\n4:Выход");
+                ("1: Администратор\n2: Менеджер\n3: Клиент\n0: Выход");
         final int answer = Reader.readInt();
         while (answer != 0) {
             switch (answer) {

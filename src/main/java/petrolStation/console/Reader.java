@@ -40,7 +40,7 @@ public class Reader {
     public static int readInt(String s, int beginCheck, int endCheck) {
         System.out.println(s);
         try {
-            int rtn = Integer.parseInt(reader.readLine());
+            final int rtn = Integer.parseInt(reader.readLine());
             if (!checkInt(rtn, beginCheck, endCheck)) {
                 System.out.println("Введены невалидные данные, попробуйте еще раз\n");
                 readInt(s, beginCheck, endCheck);

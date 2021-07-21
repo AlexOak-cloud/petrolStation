@@ -15,7 +15,7 @@ public class AdminMenu {
                     AdminService.createStation();
                     adminMenu();
                 case 2:
-                    System.out.println(AdminService.showList(AdminService.getAllStations()));
+                    AdminService.showAllStation();
                     adminMenu();
                 case 3:
                     final Station station = AdminService.getStationById();
@@ -32,7 +32,7 @@ public class AdminMenu {
 
     public static void selectStation(Station station) {
         System.out.println
-                ("1:Список топлива\n2:Добавить топливо\n3:Удалить топливо\n4:Удалить станцию\n0: Выход");
+                ("1:Список топлива\n2:Добавить топливо\n3:Удалить топливо\n0: Выход");
         int answer = Reader.readInt();
         while (answer != 0) {
             switch (answer) {
@@ -44,9 +44,6 @@ public class AdminMenu {
                     selectStation(station);
                 case 3:
                     AdminService.deletePetrol(station);
-                    selectStation(station);
-                case 4:
-                    AdminService.deleteStation();
                     selectStation(station);
                 case 0:
                     adminMenu();
