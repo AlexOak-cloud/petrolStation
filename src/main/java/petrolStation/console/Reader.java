@@ -41,8 +41,9 @@ public class Reader {
         System.out.println(s);
         try {
             final int rtn = Integer.parseInt(reader.readLine());
-            if (!checkInt(rtn, beginCheck, endCheck)) {
-                System.out.println("Введены невалидные данные, попробуйте еще раз\n");
+            if (rtn < beginCheck || rtn > endCheck ) {
+                System.out.println("Введены невалидные данные," +
+                        " попробуйте еще раз(Разрешенные значения от " + beginCheck + " до " + endCheck);
                 readInt(s, beginCheck, endCheck);
             }
             return rtn;
@@ -69,16 +70,9 @@ public class Reader {
         }
     }
 
-    public static boolean checkInt(int value, int begin, int end) {
-        if (value < begin && value > end) {
-            System.out.println("Введены невалидные данные\n");
-            return false;
-        } else {
-            return true;
-        }
-    }
+
     public static boolean isItPositive(int number) {
-        if (number > 0) {
+        if (number >= 0) {
             return true;
         } else {
             System.out.println("Введены отрицательные данные (или 0)\n");

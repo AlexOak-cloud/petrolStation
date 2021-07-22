@@ -1,6 +1,7 @@
 package petrolStation.testSpace;
 
 import petrolStation.console.MainMenu;
+import petrolStation.console.Reader;
 import petrolStation.util.DBConnector;
 
 import java.sql.PreparedStatement;
@@ -12,18 +13,5 @@ import java.util.List;
 public class TestSpace {
     public static void main(String[] args) {
         MainMenu.mainMenu();
-
-
-
-
     }
-
-    public static <T> String showList(List<T> list) {
-        StringBuilder sb = new StringBuilder();
-        for (Object tmp : list) {
-            sb.append(tmp).append("\n");
-        }
-        return sb.toString();
-    }
-
 }

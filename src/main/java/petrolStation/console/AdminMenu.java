@@ -9,7 +9,7 @@ public class AdminMenu {
         System.out.println
                 ("1:Создать станцию\n2:Список станций\n3:Выбрать станцию\n4:Удалить станцию\n0: Выход");
         int answer = Reader.readInt();
-        while (answer != 0) {
+        while (true) {
             switch (answer) {
                 case 1:
                     AdminService.createStation();
@@ -32,9 +32,9 @@ public class AdminMenu {
 
     public static void selectStation(Station station) {
         System.out.println
-                ("1:Список топлива\n2:Добавить топливо\n3:Удалить топливо\n0: Выход");
+                ("1:Список топлива доступного на станции\n2:Добавить топливо\n3:Удалить топливо\n0: Выход");
         int answer = Reader.readInt();
-        while (answer != 0) {
+        while (true) {
             switch (answer) {
                 case 1:
                     AdminService.showJoin(station);

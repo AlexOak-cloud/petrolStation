@@ -19,8 +19,8 @@ public class OrderDAO {
             session.persist(order);
             transaction.commit();
         } catch (Exception ex) {
-            transaction.rollback();
             ex.printStackTrace();
+            transaction.rollback();
         }
     }
 
@@ -28,6 +28,7 @@ public class OrderDAO {
         Transaction transaction = session.beginTransaction();
         try {
             final Query<Order> orderQuery = session.createQuery("from Order", Order.class);
+            transaction.commit();
             return orderQuery.getResultList();
         } catch (Exception ex) {
             transaction.rollback();

@@ -14,9 +14,10 @@ public class ManagerService {
 
 
     public static void updatePetrolPrice() {
-        System.out.println(AdminService.showListPetrol(AdminDAO.getAllPetrol()));
+        final List<Petrol> allPetrol = AdminDAO.getAllPetrol();
+        System.out.println(AdminService.showListPetrol(allPetrol));
         final int id = Reader.readInt
-                ("Выберите номер топлива для изменения стоимости", 18, 21);
+                ("Выберите номер топлива для изменения стоимости", 1,allPetrol.size()+1 );
         final int price = Reader.readInt("Введите новую стоимость");
         final Petrol petrol = AdminDAO.getPetrolById(id);
         ManagerDAO.updatePrice(price, petrol);
@@ -59,7 +60,7 @@ public class ManagerService {
     public static int newOrderByQuantity(Petrol petrol) {
         final int quantity = Reader.readInt
                 ("Введите колличество топлива для завпраки (л)");
-        System.out.println("Сумма к оплате " +
+        System.out.println("Успешно: Сумма к оплате " +
                 petrol.getPrice() + quantity + " р");
         return quantity;
     }
@@ -68,14 +69,14 @@ public class ManagerService {
     public static void newOrder() {
         final Petrol petrol = selectPetrol();
         final int answer = Reader.readInt
-                ("1:Ввести сумму для заправкм\n" +
+                ("1: Ввести сумму для заправкм\n" +
                                 "2: Ввести колличестов топлива для заправки",
                         1, 2);
         if (answer == 1) {
-            final int sum = newOrderBySum(petrol);
+            final double sum = newOrderBySum(petrol);
             OrderDAO.add(new Order(petrol.getName(), sum, sum / petrol.getPrice(), LocalDateTime.now()));
         } else if (answer == 2) {
-            final int quantity = newOrderByQuantity(petrol);
+            final double quantity = newOrderByQuantity(petrol);
             OrderDAO.add(new Order(petrol.getName(), quantity * petrol.getPrice(), quantity, LocalDateTime.now()));
         }
     }

@@ -16,9 +16,9 @@ public class Order {
     @Column(name = "petrol_name")
     private String petrolName;
     @Column(name = "sum")
-    private int sum;
+    private double sum;
     @Column(name = "quantity")
-    private int quantity;
+    private double quantity;
     @Column(name = "time")
     private LocalDateTime time;
 
@@ -30,11 +30,11 @@ public class Order {
         return petrolName;
     }
 
-    public int getSum() {
+    public double getSum() {
         return sum;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
@@ -45,7 +45,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(String petrolName, int sum, int quantity, LocalDateTime time) {
+    public Order(String petrolName, double sum, double quantity, LocalDateTime time) {
         this.petrolName = petrolName;
         this.sum = sum;
         this.quantity = quantity;
@@ -68,8 +68,8 @@ public class Order {
      *
      *        CREATE TABLE orders (id INT AUTO_INCREMENT PRIMARY KEY,
      *                             petrol_name VARCHAR(255)NOT NULL,
-     *                             sum int NOT NULL CHECK(SUM>0),
-     *                             quantity INT NOT NULL CHECK(quantity>0),
+     *                             sum DOUBLE NOT NULL CHECK(SUM>0),
+     *                             quantity DOUBLE  NOT NULL CHECK(quantity>0),
      *                             time TIMESTAMP NOT NULL);
      */
 }

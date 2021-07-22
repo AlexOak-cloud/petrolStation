@@ -1,10 +1,13 @@
 package petrolStation.services;
 
+import org.hibernate.internal.IteratorImpl;
+import petrolStation.console.AdminMenu;
 import petrolStation.console.Reader;
 import petrolStation.DAO.AdminDAO;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class AdminService {
@@ -43,7 +46,7 @@ public class AdminService {
         System.out.println(showListStations(allStation));
         final int id = Reader.readInt("Введите номер колонки(станции) для удаления",
                 1, allStation.size() + 1);
-        final Station station = AdminDAO.getStationById(id);
+        final Station station = AdminDAO.getStationById(allStation.get(id-1).getId());
         AdminDAO.deleteStation(station);
     }
 
@@ -51,7 +54,7 @@ public class AdminService {
     public static void join(Station s) {
         System.out.println(showListPetrol(AdminDAO.getAllPetrol()));
         final int idPetrol = Reader.readInt
-                ("Введите id топлива для добавления", 18, 21);
+                ("Введите номер топлива для добавления", 18, 21);
         final Petrol petrol = AdminDAO.getPetrolById(idPetrol);
         AdminDAO.join(s, petrol);
     }
@@ -59,9 +62,12 @@ public class AdminService {
 
 
     public static List<Petrol> showJoin(Station s) {
+        System.out.println(s + ": ");
         final List<Petrol> petrol = AdminDAO.showJoin(s);
-        if(petrol.get(0).equals(null)){
+        Iterator<Petrol> iterator = petrol.listIterator();
+        if(!iterator.hasNext()){
             System.out.println("Нет доступного топлива на станции\n");
+            AdminMenu.selectStation(s);
         } else {
             System.out.println(showListPetrol(petrol));
         }
@@ -72,7 +78,7 @@ public class AdminService {
     public static void deletePetrol(Station s) {
         System.out.println(showListPetrol(AdminDAO.showJoin(s)));
         final int id = Reader.readInt
-                ("Введите id топлива для его удаления", 18, 21);
+                ("Введите номер топлива для его удаления", 18, 21);
         AdminDAO.deletePetrol(s, id);
     }
 
@@ -91,7 +97,8 @@ public class AdminService {
         StringBuilder sb = new StringBuilder();
         int number = 1;
         for (Petrol tmp : list) {
-            sb.append(number).append(": Petrol = ").append(tmp.getName()).append(", price= ").append(tmp.getPrice());
+            sb.append(number).append(": Petrol = ").append(tmp.getName()).
+                    append(", price= ").append(tmp.getPrice()).append("\n");
             number++;
         }
         return sb.toString();

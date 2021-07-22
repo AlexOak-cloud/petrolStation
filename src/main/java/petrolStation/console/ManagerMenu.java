@@ -8,7 +8,7 @@ public class ManagerMenu {
         System.out.println
                 ("1: Новая заправка\n2: Отмена заказа\n3: Изменить стоимость топлива\n0: Выход");
         final int answer = Reader.readInt();
-        while (answer != 0) {
+        while (true) {
             switch (answer) {
                 case 1:
                     ManagerService.newOrder();
@@ -19,7 +19,7 @@ public class ManagerMenu {
                 case 3:
                     ManagerService.updatePetrolPrice();
                     managerMenu();
-                case 4:
+                case 0:
                     MainMenu.mainMenu();
             }
         }

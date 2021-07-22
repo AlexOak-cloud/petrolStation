@@ -7,7 +7,7 @@ public class ClientMenu {
     public static void clientMenu(){
         System.out.println("1: Оформить заказ\n2: Отменить заказ\n0: Выход");
         final int answer = Reader.readInt();
-        while(answer != 0){
+        while(true){
             switch (answer){
                 case 1:
                     ClientService.newOrder();

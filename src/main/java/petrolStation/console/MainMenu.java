@@ -11,7 +11,7 @@ public class MainMenu {
         System.out.println
                 ("1: Администратор\n2: Менеджер\n3: Клиент\n0: Выход");
         final int answer = Reader.readInt();
-        while (answer != 0) {
+        while (true) {
             switch (answer) {
                 case 1:
                     AdminMenu.adminMenu();
