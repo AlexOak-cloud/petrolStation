@@ -16,10 +16,10 @@ public class ManagerService {
     public static void updatePetrolPrice() {
         final List<Petrol> allPetrol = AdminDAO.getAllPetrol();
         System.out.println(AdminService.showListPetrol(allPetrol));
-        final int id = Reader.readInt
+        final int number = Reader.readInt
                 ("Выберите номер топлива для изменения стоимости", 1,allPetrol.size()+1 );
         final int price = Reader.readInt("Введите новую стоимость");
-        final Petrol petrol = AdminDAO.getPetrolById(id);
+        final Petrol petrol = allPetrol.get(number-1);
         ManagerDAO.updatePrice(price, petrol);
     }
 

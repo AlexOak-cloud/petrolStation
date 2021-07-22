@@ -16,5 +16,5 @@ public interface SQLQuery {
             "JOIN petrol_station " +
             "ON petrol.id = petrol_station.id_petrol " +
             "WHERE petrol_station.id_station = %d;";
-    String updatePrice = "update petrol set price = %d where name = %s;";
+    String updatePrice = "update petrol set price = %d where name = '%s';";
 }
