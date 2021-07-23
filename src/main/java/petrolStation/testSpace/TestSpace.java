@@ -1,17 +1,16 @@
 package petrolStation.testSpace;
 
+import petrolStation.DAO.AdminDAO;
 import petrolStation.console.MainMenu;
-import petrolStation.console.Reader;
-import petrolStation.util.DBConnector;
+import petrolStation.model.Petrol;
+import petrolStation.services.AdminService;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class TestSpace {
     public static void main(String[] args) {
+        final List<Petrol> allPetrol = AdminDAO.getAllPetrol();
+        System.out.println(AdminService.showListPetrol(allPetrol));
         MainMenu.mainMenu();
     }
 }

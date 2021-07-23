@@ -17,10 +17,5 @@ public class ManagerDAO {
             System.err.println("->->->Ошибка метода ManagerDAO.updatePrice()<-<-<-");
         }
     }
-
-
-
-
-
 }
 

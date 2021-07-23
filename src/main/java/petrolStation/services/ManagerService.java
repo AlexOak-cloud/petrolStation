@@ -1,11 +1,13 @@
 package petrolStation.services;
 
 import petrolStation.DAO.OrderDAO;
+import petrolStation.console.ManagerMenu;
 import petrolStation.console.Reader;
 import petrolStation.DAO.AdminDAO;
 import petrolStation.DAO.ManagerDAO;
 import petrolStation.model.Order;
 import petrolStation.model.Petrol;
+import petrolStation.model.Station;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,28 +26,8 @@ public class ManagerService {
     }
 
 
-    public static Petrol selectPetrol() {
-        final List<Petrol> allPetrol = AdminDAO.getAllPetrol();
-        int number = 1;
-        for (Petrol tmp : allPetrol) {
-            System.out.println(number + ": " + tmp.getName() +
-                    ", price - " + tmp.getPrice());
-            number++;
-        }
-        final int select = Reader.readInt
-                ("Выберите номер топлива", 1, 4);
-        switch (select) {
-            case 1:
-                return allPetrol.get(0);
-            case 2:
-                return allPetrol.get(1);
-            case 3:
-                return allPetrol.get(2);
-            case 4:
-                return allPetrol.get(3);
-            default:
-                return new Petrol();
-        }
+    public static Petrol selectPetrol(List<Petrol> list) {
+        return list.get(Reader.readInt("Введите номер топлива", 1, list.size() + 1)-1);
     }
 
 
@@ -67,17 +49,26 @@ public class ManagerService {
 
 
     public static void newOrder() {
-        final Petrol petrol = selectPetrol();
+        final Station stationById = AdminService.getStationById();
+        final List<Petrol> petrolList = AdminService.showJoin(stationById);
+        final Petrol petrol = selectPetrol(petrolList);
         final int answer = Reader.readInt
                 ("1: Ввести сумму для заправкм\n" +
                                 "2: Ввести колличестов топлива для заправки",
                         1, 2);
         if (answer == 1) {
             final double sum = newOrderBySum(petrol);
-            OrderDAO.add(new Order(petrol.getName(), sum, sum / petrol.getPrice(), LocalDateTime.now()));
+            final Order order = new Order(petrol.getName(), sum, sum / petrol.getPrice(), LocalDateTime.now());
+            OrderDAO.add(order);
+            System.out.println("Успешно!");
+            System.out.println("Чек: "+ order);
         } else if (answer == 2) {
             final double quantity = newOrderByQuantity(petrol);
-            OrderDAO.add(new Order(petrol.getName(), quantity * petrol.getPrice(), quantity, LocalDateTime.now()));
+            final Order order = new Order(petrol.getName(), quantity * petrol.getPrice(), quantity, LocalDateTime.now());
+            OrderDAO.add(order);
+            System.out.println("Успешно!");
+            System.out.println("Чек: " + order);
+
         }
     }
 
@@ -85,7 +76,10 @@ public class ManagerService {
     public static void deleteOrder() {
         final List<Order> orders = OrderService.showOrders();
         final int number = Reader.readInt
-                ("Введите номер заказа для его удаления", 1, orders.size() + 1);
+                ("Введите номер заказа для его удаления\n0: Назад", 0, orders.size() + 1);
+        if(number == 0){
+            ManagerMenu.managerMenu();
+        }
         OrderDAO.deleteOrder(orders.get(number-1));
     }
 }
