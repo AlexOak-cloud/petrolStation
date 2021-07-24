@@ -10,6 +10,7 @@ import petrolStation.model.Order;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,20 +18,22 @@ import static petrolStation.services.AdminService.showListStations;
 
 public class ManagerService {
 
+    static DecimalFormat df = new DecimalFormat("#.##");
+
 
     public static void updatePetrolPrice() {
-        final List<Petrol> allPetrol = AdminDAO.getAllPetrol();
+        List<Petrol> allPetrol = AdminDAO.getAllPetrol();
         System.out.println(AdminService.showListPetrol(allPetrol));
         final int number = Reader.readInt
                 ("Выберите номер топлива для изменения стоимости\n0: Назад", 0, allPetrol.size() + 1);
-        if(number == 0){
+        if (number == 0) {
             ManagerMenu.managerMenu();
         }
         final int price = Reader.readInt("Введите новую стоимость\n0: Назад");
         if (number == 0) {
             ManagerMenu.managerMenu();
         }
-        final Petrol petrol = allPetrol.get(number - 1);
+        Petrol petrol = allPetrol.get(number - 1);
         ManagerDAO.updatePrice(price, petrol);
     }
 
@@ -46,7 +49,7 @@ public class ManagerService {
 
     public static int newOrderBySum(Petrol petrol) {
         final int sum = Reader.readInt("Введите сумму для заправки\n0: Назад");
-        if(sum == 0){
+        if (sum == 0) {
             ManagerMenu.managerMenu();
         }
         System.out.println("Колличество топлива = " +
@@ -59,7 +62,7 @@ public class ManagerService {
     public static int newOrderByQuantity(Petrol petrol) {
         final int quantity = Reader.readInt
                 ("Введите колличество топлива для завпраки (л)\n0: Назад");
-        if(quantity == 0){
+        if (quantity == 0) {
             ManagerMenu.managerMenu();
         }
         System.out.println("Успешно: Сумма к оплате " +
@@ -79,14 +82,21 @@ public class ManagerService {
         if (answer == 0) {
             ManagerMenu.managerMenu();
         } else if (answer == 1) {
-            final double sum = newOrderBySum(petrol);
-            final Order order = new Order(petrol.getName(), sum, sum / petrol.getPrice(), LocalDateTime.now());
+            double sum = newOrderBySum(petrol);
+            final Order order = new Order(petrol.getName(),
+                    sum,
+                    sum / petrol.getPrice(),
+                    LocalDateTime.now());
             OrderDAO.add(order);
+
             System.out.println("Успешно!");
             System.out.println("Чек: " + order);
         } else if (answer == 2) {
             final double quantity = newOrderByQuantity(petrol);
-            final Order order = new Order(petrol.getName(), quantity * petrol.getPrice(), quantity, LocalDateTime.now());
+            final Order order = new Order(petrol.getName(),
+                    quantity * petrol.getPrice(),
+                    quantity,
+                    LocalDateTime.now());
             OrderDAO.add(order);
             System.out.println("Успешно!");
             System.out.println("Чек: " + order);

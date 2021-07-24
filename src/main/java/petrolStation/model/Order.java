@@ -54,12 +54,11 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "petrolName='" + petrolName + '\'' +
-                ", sum=" + sum +
-                ", quantity=" + quantity +
-                ", time=" + time +
-                '}';
+        return "Закза номер " + id + "( " + petrolName +
+                ", сумма= " + sum +
+                ", колличества топлива= " + quantity +
+                "(л), время заказа= " + time +
+                ")";
     }
     /**
      *

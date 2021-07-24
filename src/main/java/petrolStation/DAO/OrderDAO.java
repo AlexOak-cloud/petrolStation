@@ -37,18 +37,6 @@ public class OrderDAO {
         }
     }
 
-    public static Order getOrderById(int id){
-        Transaction transaction = session.beginTransaction();
-        try{
-            final Order order = session.get(Order.class, id);
-            transaction.commit();
-            return order;
-        } catch (Exception ex){
-            transaction.rollback();
-            ex.printStackTrace();
-            return new Order();
-        }
-    }
     public static void deleteOrder(Order order){
         Transaction transaction = session.beginTransaction();
         try{

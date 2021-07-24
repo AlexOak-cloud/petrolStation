@@ -5,7 +5,7 @@ import petrolStation.services.ClientService;
 public class ClientMenu {
 
     public static void clientMenu(){
-        System.out.println("1: Оформить заказ\n2: Отменить заказ\n0: Выход");
+        System.out.println("1: Оформить заказ\n2: Отменить заказ\n0: Главное меню");
         final int answer = Reader.readInt();
         while(true){
             switch (answer){
@@ -15,8 +15,8 @@ public class ClientMenu {
                 case 2 :
                     System.out.println("Что бы отменить заказ обратитесь к менеджеру");
                     clientMenu();
-                case 3 :
-                    MainMenu.mainMenu();
+                case 0 :
+                    MainMenu.start();
             }
         }
     }

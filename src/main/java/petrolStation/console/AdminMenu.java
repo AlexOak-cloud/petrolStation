@@ -25,7 +25,7 @@ public class AdminMenu {
                     AdminService.deleteStation();
                     adminMenu();
                 case 0:
-                    MainMenu.mainMenu();
+                    MainMenu.start();
             }
         }
     }

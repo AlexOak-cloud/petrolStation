@@ -14,7 +14,6 @@ public class ManagerDAO {
             DBConnector.getStatement().executeUpdate(String.format(SQLQuery.updatePrice, price, petrol.getName()));
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.err.println("->->->Ошибка метода ManagerDAO.updatePrice()<-<-<-");
         }
     }
 }

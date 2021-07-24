@@ -27,15 +27,4 @@ public class OrderService {
         }
         return allOrders;
     }
-
-    public static void deleteOrder() {
-        showOrders();
-        final List<Order> allOrders = OrderDAO.getAllOrders();
-        final int number = Reader.readInt("Введите число для удаления заказа", 1, allOrders.size() + 1);
-        OrderDAO.deleteOrder(OrderDAO.getOrderById(allOrders.get(number + 1).getId()));
-    }
-
-    public static void saveOrder(String petrolName, int sum, int quantity) {
-        OrderDAO.add(new Order(petrolName, sum, quantity, LocalDateTime.now()));
-    }
 }

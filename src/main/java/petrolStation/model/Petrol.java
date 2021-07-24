@@ -45,9 +45,9 @@ public class Petrol {
 
     @Override
     public String toString() {
-        return "Petrol{id=" + id + ", name=" + name +
-                ", price=" + price +
-                '}';
+        return "Топливо ("+ name +", " +
+                ", цена=" + price +
+                ')';
     }
 
 

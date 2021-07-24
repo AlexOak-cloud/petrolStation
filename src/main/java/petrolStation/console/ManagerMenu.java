@@ -20,7 +20,7 @@ public class ManagerMenu {
                     ManagerService.updatePetrolPrice();
                     managerMenu();
                 case 0:
-                    MainMenu.mainMenu();
+                    MainMenu.start();
             }
         }
     }
