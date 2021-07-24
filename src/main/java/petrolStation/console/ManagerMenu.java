@@ -6,7 +6,7 @@ public class ManagerMenu {
 
     public static void managerMenu() {
         System.out.println
-                ("1: Новая заправка\n2: Отмена заказа\n3: Изменить стоимость топлива\n0: Выход");
+                ("1: Новая заправка\n2: Отмена заказа\n3: Изменить стоимость топлива\n0: Главное меню");
         final int answer = Reader.readInt();
         while (true) {
             switch (answer) {

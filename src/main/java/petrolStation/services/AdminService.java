@@ -1,6 +1,5 @@
 package petrolStation.services;
 
-import org.hibernate.internal.IteratorImpl;
 import petrolStation.console.AdminMenu;
 import petrolStation.console.Reader;
 import petrolStation.DAO.AdminDAO;
@@ -14,29 +13,28 @@ public class AdminService {
 
 
     public static void createStation() {
-        final String name = Reader.readString("Введите имя/номер новой станции");
+        final String name = Reader.readString("Введите имя/номер новой станции\n0: Назад");
+        if (name.equals("0")) {
+            AdminMenu.adminMenu();
+        }
         AdminDAO.createStation(new Station(name));
     }
 
 
     public static List<Station> getAllStations() {
-      return AdminDAO.getAllStation();
+        return AdminDAO.getAllStation();
 
     }
 
-    public static void showAllStation() {
-        final List<Station> allStations = AdminDAO.getAllStation();
-        int number = 1;
-        for (Station tmp : allStations) {
-            System.out.println(number + ": " + tmp);
-            number++;
-        }
-    }
 
-    public static Station getStationById() {
-        showAllStation();
+    public static Station selectStation() {
         final List<Station> allStations = getAllStations();
-        final int idStation = Reader.readInt("Выберите номер станции", 1, allStations.size() + 1);
+        System.out.println(showListStations(allStations));
+        final int idStation = Reader.readInt
+                ("Выберите номер станции\n0: Назад", 0, allStations.size() + 1);
+        if(idStation == 0){
+            AdminMenu.adminMenu();
+        }
         return allStations.get(idStation - 1);
     }
 
@@ -44,28 +42,31 @@ public class AdminService {
     public static void deleteStation() {
         final List<Station> allStation = AdminDAO.getAllStation();
         System.out.println(showListStations(allStation));
-        final int id = Reader.readInt("Введите номер колонки(станции) для удаления",
-                1, allStation.size() + 1);
-        final Station station = AdminDAO.getStationById(allStation.get(id-1).getId());
-        AdminDAO.deleteStation(station);
+        final int number = Reader.readInt("Введите номер колонки(станции) для удаления",
+                0, allStation.size() + 1);
+        if(number == 0){
+            AdminMenu.adminMenu();
+        }
+        AdminDAO.deleteStation(AdminDAO.getStationById(allStation.get(number - 1).getId()));
     }
 
 
     public static void join(Station s) {
         System.out.println(showListPetrol(AdminDAO.getAllPetrol()));
         final int idPetrol = Reader.readInt
-                ("Введите номер топлива для добавления", 18, 21);
-        final Petrol petrol = AdminDAO.getPetrolById(idPetrol);
-        AdminDAO.join(s, petrol);
+                ("Введите номер топлива для добавления\n0: Назад", 0, 4);
+        if(idPetrol == 0){
+            AdminMenu.selectStation(s);
+        }
+        AdminDAO.join(s, AdminDAO.getPetrolById(idPetrol));
     }
-
 
 
     public static List<Petrol> showJoin(Station s) {
         System.out.println(s + ": ");
         final List<Petrol> petrol = AdminDAO.showJoin(s);
         Iterator<Petrol> iterator = petrol.listIterator();
-        if(!iterator.hasNext()){
+        if (!iterator.hasNext()) {
             System.out.println("Нет доступного топлива на станции\n");
             AdminMenu.selectStation(s);
         } else {
@@ -76,9 +77,13 @@ public class AdminService {
 
 
     public static void deletePetrol(Station s) {
-        System.out.println(showListPetrol(AdminDAO.showJoin(s)));
+        final List<Petrol> petrol = AdminDAO.showJoin(s);
+        System.out.println(showListPetrol(petrol));
         final int id = Reader.readInt
-                ("Введите номер топлива для его удаления", 18, 21);
+                ("Введите номер топлива для его удаления\n0: Назда", 0, petrol.size()+1);
+        if(id==0){
+            AdminMenu.selectStation(s);
+        }
         AdminDAO.deletePetrol(s, id);
     }
 
@@ -93,7 +98,7 @@ public class AdminService {
         return sb.toString();
     }
 
-    public static String showListPetrol(List<Petrol> list){
+    public static String showListPetrol(List<Petrol> list) {
         StringBuilder sb = new StringBuilder();
         int number = 1;
         for (Petrol tmp : list) {
@@ -103,7 +108,5 @@ public class AdminService {
         }
         return sb.toString();
     }
-
-
 }
 

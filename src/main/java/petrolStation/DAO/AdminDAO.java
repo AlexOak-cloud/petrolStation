@@ -29,8 +29,8 @@ public class AdminDAO {
             stationSession.persist(station);
             transaction.commit();
         } catch (Exception ex) {
-            transaction.rollback();
             ex.printStackTrace();
+            transaction.rollback();
         }
     }
 
@@ -69,6 +69,7 @@ public class AdminDAO {
             stationSession.delete(station);
             transaction.commit();
         } catch (Exception ex) {
+            ex.printStackTrace();
             transaction.rollback();
         }
     }
@@ -102,15 +103,12 @@ public class AdminDAO {
     }
 
 
-    public static void join(Station station, Petrol... petrol) {
+    public static void join(Station station, Petrol petrol) {
         try {
-            for (Petrol value : petrol) {
-                DBConnector.getStatement().executeUpdate
-                        (String.format(SQLQuery.forJoining, station.getId(), value.getId()));
-            }
+            DBConnector.getStatement().executeUpdate
+                    (String.format(SQLQuery.forJoining, station.getId(), petrol.getId()));
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.err.println("Ошибка метода AdminDAO.joining()");
         }
     }
 
@@ -142,6 +140,4 @@ public class AdminDAO {
             exception.printStackTrace();
         }
     }
-
-
 }
