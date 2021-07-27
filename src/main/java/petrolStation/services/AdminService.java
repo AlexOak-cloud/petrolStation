@@ -32,7 +32,7 @@ public class AdminService {
         System.out.println(showListStations(allStations));
         final int idStation = Reader.readInt
                 ("Выберите номер станции\n0: Назад", 0, allStations.size() + 1);
-        if(idStation == 0){
+        if (idStation == 0) {
             AdminMenu.adminMenu();
         }
         return allStations.get(idStation - 1);
@@ -44,10 +44,10 @@ public class AdminService {
         System.out.println(showListStations(allStation));
         final int number = Reader.readInt("Введите номер колонки(станции) для удаления",
                 0, allStation.size() + 1);
-        if(number == 0){
+        if (number == 0) {
             AdminMenu.adminMenu();
         }
-        AdminDAO.deleteStation(AdminDAO.getStationById(allStation.get(number - 1).getId()));
+        AdminDAO.deleteStation(allStation.get(number - 1));
     }
 
 
@@ -55,7 +55,7 @@ public class AdminService {
         System.out.println(showListPetrol(AdminDAO.getAllPetrol()));
         final int idPetrol = Reader.readInt
                 ("Введите номер топлива для добавления\n0: Назад", 0, 4);
-        if(idPetrol == 0){
+        if (idPetrol == 0) {
             AdminMenu.selectStation(s);
         }
         AdminDAO.join(s, AdminDAO.getPetrolById(idPetrol));
@@ -80,8 +80,8 @@ public class AdminService {
         final List<Petrol> petrol = AdminDAO.showJoin(s);
         System.out.println(showListPetrol(petrol));
         final int id = Reader.readInt
-                ("Введите номер топлива для его удаления\n0: Назда", 0, petrol.size()+1);
-        if(id==0){
+                ("Введите номер топлива для его удаления\n0: Назда", 0, petrol.size() + 1);
+        if (id == 0) {
             AdminMenu.selectStation(s);
         }
         AdminDAO.deletePetrol(s, id);

@@ -49,20 +49,6 @@ public class AdminDAO {
         }
     }
 
-
-    public static Station getStationById(int id) {
-        Transaction transaction = stationSession.beginTransaction();
-        try {
-            Station station = stationSession.get(Station.class, id);
-            transaction.commit();
-            return station;
-        } catch (Exception exception) {
-            transaction.rollback();
-            return new Station();
-        }
-    }
-
-
     public static void deleteStation(Station station) {
         Transaction transaction = stationSession.beginTransaction();
         try {
@@ -130,6 +116,7 @@ public class AdminDAO {
             return Collections.emptyList();
         }
     }
+
 
 
     public static void deletePetrol(Station s, int idPetrol) {
