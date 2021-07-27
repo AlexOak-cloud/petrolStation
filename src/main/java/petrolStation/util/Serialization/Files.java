@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Files {
-    
+
     public static final File fileStations = new File("D:/PetrolStation/Stations.eax");
     public static final File filePetrol = new File("D:/PetrolStation/Petrol.eax");
     public static final File fileOrders = new File("D:/PetrolStation/Orders.eax");
