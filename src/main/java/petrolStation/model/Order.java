@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "orders")
@@ -50,6 +51,21 @@ public class Order {
         this.sum = sum;
         this.quantity = quantity;
         this.time = time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return id == order.id && Double.compare(order.sum, sum) ==
+                0 && Double.compare(order.quantity, quantity) ==
+                0 && Objects.equals(petrolName, order.petrolName) && Objects.equals(time, order.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, petrolName, sum, quantity, time);
     }
 
     @Override

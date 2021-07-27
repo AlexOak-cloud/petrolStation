@@ -1,6 +1,7 @@
 package petrolStation.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "petrol")
@@ -50,7 +51,18 @@ public class Petrol {
                 ')';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Petrol petrol = (Petrol) o;
+        return id == petrol.id && price == petrol.price && Objects.equals(name, petrol.name);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price);
+    }
     /**Таблица для хранения информации о видах топлива и ценах ->
      *        CREATE TABLE petrol ( id INT PRIMARY KEY AUTO_INCREMENT,
      *                             name VARCHAR(255) NOT NULL,
