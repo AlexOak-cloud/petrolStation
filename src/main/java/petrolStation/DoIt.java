@@ -1,6 +1,7 @@
 package petrolStation;
 
 import petrolStation.console.MainMenu;
+import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
 public class DoIt {
