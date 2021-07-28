@@ -47,4 +47,17 @@ public class Join {
     public List<Petrol> getList() {
         return list;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        int number = 1;
+        for (Petrol tmp : this.list) {
+            sb.append(number).append(": ").append(tmp).append("\n");
+            number++;
+        }
+        return "Станция \"" +
+                station.getName() + "\"" +
+                "\n" + sb;
+    }
 }
