@@ -57,7 +57,7 @@ public class Admin {
         Iterator<Station> iterator = stations.listIterator();
         while (iterator.hasNext()) {
             if (iterator.equals(station)) {
-                stations.remove(iterator);
+                iterator.remove();
             }
         }
         writeList(stations);

@@ -8,32 +8,53 @@
 
 package petrolStation.util.Serialization;
 
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.*;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class Join {
-
-    public static Map<Key, Integer> map = new HashMap<>();
-
-    public static void write(Map<Key,Integer> map){
-        try(final ObjectOutputStream oos = new ObjectOutputStream())
-
-
+    public static void writeList(List<Join> list ){
+        try(ObjectOutputStream oos =
+                new ObjectOutputStream(new FileOutputStream(Files.getFileJoin(),true))){
+            oos.writeObject(list);
+            oos.flush();
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
     }
 
-
-
-
-    public static class Key {
-        int key;
-
-        public Key(int key) {
-            this.key = key;
+    public static List<Join> readList(){
+        try(ObjectInputStream ois =
+                new ObjectInputStream(new FileInputStream(Files.getFileJoin()))){
+            return  (List<Join>) ois.readObject();
+        }catch (IOException | ClassNotFoundException ex ){
+            ex.printStackTrace();
+            return Collections.emptyList();
         }
+    }
 
-        public int getKey() {
-            return key;
+    public static List<Join> get(){
+        return  readList();
+    }
+
+    public static void write(Join join){
+        try(ObjectOutputStream oos =
+                    new ObjectOutputStream(new FileOutputStream(Files.getFileJoin(),true))){
+            oos.writeObject(join);
+            oos.flush();
+        }catch ( IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public static void delete(Join join){
+        final List<Join> joins = readList();
+        Iterator<Join> iterator = joins.listIterator();
+        while(iterator.hasNext()){
+            if(iterator.equals(join)){
+                iterator.remove();
+            }
         }
     }
 }

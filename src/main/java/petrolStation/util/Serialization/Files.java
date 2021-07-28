@@ -13,21 +13,11 @@ import java.io.IOException;
 
 public class Files {
 
+    public static final File fileJoin = new File("D:/PetrolStation/Join.eax");
     public static final File fileStations = new File("D:/PetrolStation/Stations.eax");
     public static final File filePetrol = new File("D:/PetrolStation/Petrol.eax");
     public static final File fileOrders = new File("D:/PetrolStation/Orders.eax");
-    public static final File fileJoin = new File("D:/PetrolStation/Join.eax");
 
-    public static File getFileJoin() {
-        try {
-            if (!fileJoin.exists()) {
-                fileJoin.createNewFile();
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return fileJoin;
-    }
 
     public static File getFileStations() {
         try {
@@ -63,4 +53,14 @@ public class Files {
         return fileOrders;
     }
 
+    public static File getFileJoin(){
+        try{
+            if(!fileJoin.exists()){
+                fileJoin.createNewFile();
+            }
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+        return fileJoin;
+    }
 }

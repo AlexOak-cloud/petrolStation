@@ -57,7 +57,7 @@ public class Order {
         Iterator<Order> iterator = orders.listIterator();
         while (iterator.hasNext()) {
             if (iterator.equals(order)) {
-                orders.remove(iterator);
+                iterator.remove();
             }
         }
         writeList(orders);

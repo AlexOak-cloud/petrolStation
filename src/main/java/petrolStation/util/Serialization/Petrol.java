@@ -55,7 +55,7 @@ public class Petrol {
         Iterator<Petrol> iterator = petrolList.listIterator();
         while (iterator.hasNext()) {
             if (iterator.equals(petrol)) {
-                petrolList.remove(iterator);
+                iterator.remove();
             }
         }
         writeList(petrolList);
