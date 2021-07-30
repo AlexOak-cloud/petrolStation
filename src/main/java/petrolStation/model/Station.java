@@ -1,11 +1,12 @@
 package petrolStation.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "stations")
-public class Station {
+public class Station implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
