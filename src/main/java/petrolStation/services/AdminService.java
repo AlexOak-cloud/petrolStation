@@ -1,8 +1,10 @@
 package petrolStation.services;
 
+import petrolStation.DAO.JoinDAO;
+import petrolStation.DAO.PetrolDAO;
 import petrolStation.console.AdminMenu;
 import petrolStation.console.Reader;
-import petrolStation.DAO.AdminDAO;
+import petrolStation.DAO.StationDAO;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
@@ -17,12 +19,12 @@ public class AdminService {
         if (name.equals("0")) {
             AdminMenu.adminMenu();
         }
-        AdminDAO.createStation(new Station(name));
+        StationDAO.createStation(new Station(name));
     }
 
 
     public static List<Station> getAllStations() {
-        return AdminDAO.getAllStation();
+        return StationDAO.getAllStation();
 
     }
 
@@ -40,31 +42,31 @@ public class AdminService {
 
 
     public static void deleteStation() {
-        final List<Station> allStation = AdminDAO.getAllStation();
+        final List<Station> allStation = StationDAO.getAllStation();
         System.out.println(showListStations(allStation));
         final int number = Reader.readInt("Введите номер колонки(станции) для удаления",
                 0, allStation.size() + 1);
         if (number == 0) {
             AdminMenu.adminMenu();
         }
-        AdminDAO.deleteStation(allStation.get(number - 1));
+        StationDAO.deleteStation(allStation.get(number - 1));
     }
 
 
     public static void join(Station s) {
-        System.out.println(showListPetrol(AdminDAO.getAllPetrol()));
+        System.out.println(showListPetrol(PetrolDAO.getAllPetrol()));
         final int idPetrol = Reader.readInt
                 ("Введите номер топлива для добавления\n0: Назад", 0, 4);
         if (idPetrol == 0) {
             AdminMenu.selectStation(s);
         }
-        AdminDAO.join(s, AdminDAO.getPetrolById(idPetrol));
+        JoinDAO.join(s, PetrolDAO.getPetrolById(idPetrol));
     }
 
 
     public static List<Petrol> showJoin(Station s) {
         System.out.println(s + ": ");
-        final List<Petrol> petrol = AdminDAO.showJoin(s);
+        final List<Petrol> petrol = JoinDAO.showJoin(s);
         Iterator<Petrol> iterator = petrol.listIterator();
         if (!iterator.hasNext()) {
             System.out.println("Нет доступного топлива на станции\n");
@@ -72,19 +74,19 @@ public class AdminService {
         } else {
             System.out.println(showListPetrol(petrol));
         }
-        return AdminDAO.showJoin(s);
+        return JoinDAO.showJoin(s);
     }
 
 
     public static void deletePetrol(Station s) {
-        final List<Petrol> petrol = AdminDAO.showJoin(s);
+        final List<Petrol> petrol = JoinDAO.showJoin(s);
         System.out.println(showListPetrol(petrol));
         final int id = Reader.readInt
                 ("Введите номер топлива для его удаления\n0: Назда", 0, petrol.size() + 1);
         if (id == 0) {
             AdminMenu.selectStation(s);
         }
-        AdminDAO.deletePetrol(s, id);
+        PetrolDAO.deletePetrol(s, id);
     }
 
 

@@ -1,10 +1,9 @@
 package petrolStation.services;
 
 import petrolStation.DAO.OrderDAO;
+import petrolStation.DAO.PetrolDAO;
 import petrolStation.console.ManagerMenu;
 import petrolStation.console.Reader;
-import petrolStation.DAO.AdminDAO;
-import petrolStation.DAO.ManagerDAO;
 import petrolStation.model.Order;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
@@ -21,7 +20,7 @@ public class ManagerService {
 
 
     public static void updatePetrolPrice() {
-        List<Petrol> allPetrol = AdminDAO.getAllPetrol();
+        List<Petrol> allPetrol = PetrolDAO.getAllPetrol();
         System.out.println(AdminService.showListPetrol(allPetrol));
         final int number = Reader.readInt
                 ("Выберите номер топлива для изменения стоимости\n0: Назад", 0, allPetrol.size() + 1);
@@ -33,7 +32,7 @@ public class ManagerService {
             ManagerMenu.managerMenu();
         }
         Petrol petrol = allPetrol.get(number - 1);
-        ManagerDAO.updatePrice(price, petrol);
+        PetrolDAO.updatePrice(price, petrol);
     }
 
 
