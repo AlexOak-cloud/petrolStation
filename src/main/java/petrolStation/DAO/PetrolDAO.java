@@ -53,15 +53,6 @@ public class PetrolDAO {
         }
     }
 
-    public static void deletePetrol(Station s, int idPetrol) {
-        try {
-            DBConnector.getStatement().executeUpdate
-                    (String.format(SQLQuery.deletePetrol, s.getId(), idPetrol));
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        }
-    }
-
     public static void updatePrice(int price, Petrol petrol) {
         try {
             DBConnector.getStatement().executeUpdate(String.format(SQLQuery.updatePrice, price, petrol.getName()));

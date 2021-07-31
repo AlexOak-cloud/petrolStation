@@ -86,7 +86,7 @@ public class AdminService {
         if (id == 0) {
             AdminMenu.selectStation(s);
         }
-        PetrolDAO.deletePetrol(s, id);
+        JoinDAO.deletePetrol(s, id);
     }
 
 

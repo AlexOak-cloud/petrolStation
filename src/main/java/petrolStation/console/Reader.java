@@ -24,7 +24,7 @@ public class Reader {
     public static int readInt() {
         try {
             final int i = Integer.parseInt(reader.readLine());
-            if (!isItPositive(i)) {
+            if (i < 0) {
                 System.out.println("Введено отрицательное число, попробуте еще раз\n");
                 readInt();
             }
@@ -58,7 +58,7 @@ public class Reader {
         System.out.println(s);
         try {
             final int i = Integer.parseInt(reader.readLine());
-            if (!isItPositive(i)) {
+            if (i < 0) {
                 System.out.println("Введено отрицательное число, попробуте еще раз\n");
                 readInt();
             }
@@ -67,16 +67,6 @@ public class Reader {
             ex.printStackTrace();
             System.err.println("Ошибка метода Reader.readInt(String)");
             return 0;
-        }
-    }
-
-
-    public static boolean isItPositive(int number) {
-        if (number >= 0) {
-            return true;
-        } else {
-            System.out.println("Введены отрицательные данные (или 0)\n");
-            return false;
         }
     }
 }
