@@ -14,62 +14,54 @@ import petrolStation.model.Station;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Serialager {
 
-    public static <T> void writeList(List<T> list) {
-        try (final ObjectOutputStream oos =
-                     new ObjectOutputStream(new FileOutputStream(SerUtil.initFile(list),true))) {
-            oos.writeObject(list);
-            oos.flush();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+    public static ObjectOutputStream oos;
+    public static ObjectInputStream ois;
+
+
+    public static <T> void writeList(List<T> list) throws IOException {
+        oos = new ObjectOutputStream(new FileOutputStream(SerUtil.initList(list),true));
+        oos.writeObject(list);
+        oos.flush();
     }
 
-    public static <T> void write(T t) {
-        try (final ObjectOutputStream oos =
-                     new ObjectOutputStream(new FileOutputStream(SerUtil.initObject(t)))) {
-            final List<T> list = readList(t);
-            list.add(t);
-            writeList(list);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static <T> void write(T t) throws IOException, ClassNotFoundException {
+        final List<T> list = readList(t);
+        list.add(t);
+        writeList(list);
     }
 
-    public static <T> List<T> readList(T t) {
-        try (final ObjectInputStream ois =
-                     new ObjectInputStream(new FileInputStream(SerUtil.initObject(t)))) {
-            return (List<T>) ois.readObject();
-        } catch (IOException | ClassNotFoundException ex) {
-            ex.printStackTrace();
-            return Collections.emptyList();
-        }
+    public static <T> List<T> readList(T t) throws IOException, ClassNotFoundException {
+        ois = new ObjectInputStream(new FileInputStream(SerUtil.initObject(t)));
+        return (List<T>) ois.readObject();
     }
 
 
     public static void main(String[] args) {
-        Station station = new Station("qwe");
-        Petrol petrol = new Petrol("93", 123);
-        Petrol petrol1 = new Petrol("94", 123);
-        Petrol petrol2 = new Petrol("96", 123);
-        Petrol petrol3 = new Petrol("new", 123);
-        List<Petrol> petrols = new ArrayList<>();
-        petrols.add(petrol);
-        petrols.add(petrol1);
-        petrols.add(petrol2);
-        writeList(petrols);
-        final List<Petrol> petrols1 = readList(new Petrol());
-        System.out.println(showList(petrols1));
-        write(petrol3);
-        System.out.println();
-        System.out.println("new : \n\n");
-        final List<Petrol> petrols2 = readList(new Petrol());
-        System.out.println(showList(petrols2));
-
+        try {
+            Station station = new Station("qwe");
+            Petrol petrol = new Petrol("93", 123);
+            Petrol petrol1 = new Petrol("94", 123);
+            Petrol petrol2 = new Petrol("96", 123);
+            Petrol petrol3 = new Petrol("new", 123);
+            List<Petrol> petrols = new ArrayList<>();
+            petrols.add(petrol);
+            petrols.add(petrol1);
+            petrols.add(petrol2);
+            writeList(petrols);
+            final List<Petrol> petrols1 = readList(new Petrol());
+            System.out.println(showList(petrols1));
+            write(petrol3);
+            System.out.println();
+            System.out.println("new : \n\n");
+            final List<Petrol> petrols2 = readList(new Petrol());
+            System.out.println(showList(petrols2));
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public static <T> String showList(List<T> list) {

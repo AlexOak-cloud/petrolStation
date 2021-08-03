@@ -17,7 +17,7 @@ import java.util.List;
 
 public class SerUtil {
 
-    public static <T> File initFile(List<T> list) {
+    public static <T> File initList(List<T> list) {
         File file = new File("");
         final Object o = list.get(0);
         if (o.getClass() == Station.class) {
