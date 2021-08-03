@@ -12,7 +12,6 @@ package petrolStation.serialization;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
-import javax.management.Query;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,23 +20,28 @@ import java.util.List;
 public class Serialager {
     public static void main(String[] args) {
         Station station = new Station("1");
-        Petrol petrol = new Petrol("1", 11);
-        Petrol petrol1 = new Petrol("2", 22);
-        Petrol petrol2 = new Petrol("3", 33);
-        List<Petrol> listPetrol = new ArrayList<>();
-        listPetrol.add(petrol);
-        listPetrol.add(petrol1);
-        listPetrol.add(petrol2);
-        writeList(listPetrol, TypeFile.PETROL);
-        final List<Object> objects = readList(TypeFile.PETROL);
-        System.out.println(showList(objects));
-        System.out.println();
-        System.out.println("new\n\n");
-        Petrol petrol3 = new Petrol("4",44);
-        writeObject(petrol3,TypeFile.PETROL);
-        final List<Petrol> objects1 = readList(TypeFile.PETROL);
-        System.out.println(showList(objects1));
+        Station station1 = new Station("2");
+        List<Station> stations = new ArrayList<>();
+        writeList(stations,TypeFile.STATION);
+        final List<Object> objects = readList(TypeFile.STATION);
 
+
+//        Petrol petrol = new Petrol("1", 11);
+//        Petrol petrol1 = new Petrol("2", 22);
+//        Petrol petrol2 = new Petrol("3", 33);
+//        List<Petrol> listPetrol = new ArrayList<>();
+//        listPetrol.add(petrol);
+//        listPetrol.add(petrol1);
+//        listPetrol.add(petrol2);
+//        writeList(listPetrol, TypeFile.PETROL);
+//        final List<Object> objects = readList(TypeFile.PETROL);
+//        System.out.println(showList(objects));
+//        System.out.println();
+//        System.out.println("new\n\n");
+//        Petrol petrol3 = new Petrol("4",44);
+//        writeObject(petrol3,TypeFile.PETROL);
+//        final List<Petrol> objects1 = readList(TypeFile.PETROL);
+//        System.out.println(showList(objects1));
     }
 
 
@@ -54,7 +58,7 @@ public class Serialager {
     public static <T> void writeObject(T t,TypeFile typeFile){
         try(final ObjectOutputStream oos =
                     new ObjectOutputStream(new FileOutputStream(InitFile.initFile(typeFile)))){
-            final List<T> objects = readList(typeFile);
+            final List<Object> objects = readList(typeFile);
             objects.add(t);
             writeList(objects,typeFile);
         }catch (IOException ex){
@@ -62,10 +66,10 @@ public class Serialager {
         }
     }
 
-    public static <T> List<T> readList(TypeFile typeFile) {
+    public static List<Object> readList(TypeFile typeFile) {
         try (final ObjectInputStream ois =
                      new ObjectInputStream(new FileInputStream(InitFile.initFile(typeFile)))) {
-            return (List<T>) ois.readObject();
+            return (List<Object>) ois.readObject();
 
         } catch (IOException | ClassNotFoundException exception) {
             exception.printStackTrace();
