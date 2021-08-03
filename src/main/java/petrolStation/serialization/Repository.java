@@ -13,9 +13,9 @@ import java.io.IOException;
 
 public class Repository {
 
-    public static final File fileStation = new File("D:/PetrolStation/Stations.eax");
-    public static final File filePetrol = new File("D:/PetrolStation/Petrol.eax");
-    public static final File fileOrder = new File("D:/PetrolStation/Orders.eax");
+    public static final File fileStation = new File(TypeFile.STATION.toString());
+    public static final File filePetrol = new File(TypeFile.PETROL.toString());
+    public static final File fileOrder = new File(TypeFile.ORDER.toString());
 
 
     public static File getFileStation() {
