@@ -8,6 +8,8 @@
 
 package petrolStation.serialization;
 
+
+import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
 import java.io.*;
@@ -19,7 +21,7 @@ public class Serialager {
 
     public static <T> void writeList(List<T> list) {
         try (final ObjectOutputStream oos =
-                     new ObjectOutputStream(new FileOutputStream(SerUtil.initFile(list)))) {
+                     new ObjectOutputStream(new FileOutputStream(SerUtil.initFile(list),true))) {
             oos.writeObject(list);
             oos.flush();
         } catch (IOException ex) {
@@ -30,18 +32,19 @@ public class Serialager {
     public static <T> void write(T t) {
         try (final ObjectOutputStream oos =
                      new ObjectOutputStream(new FileOutputStream(SerUtil.initObject(t)))) {
-
-
+            final List<T> list = readList(t);
+            list.add(t);
+            writeList(list);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static <T> List<T> readObject(T t){
-        try(final ObjectInputStream ois =
-                    new ObjectInputStream(new FileInputStream(SerUtil.initObject(t)))){
-            return  (List<T>) ois.readObject();
-        }catch (IOException | ClassNotFoundException ex) {
+    public static <T> List<T> readList(T t) {
+        try (final ObjectInputStream ois =
+                     new ObjectInputStream(new FileInputStream(SerUtil.initObject(t)))) {
+            return (List<T>) ois.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
             return Collections.emptyList();
         }
@@ -49,22 +52,29 @@ public class Serialager {
 
 
     public static void main(String[] args) {
-//        final Station station = new Station("123");
-//        final Station station1 = new Station("321");
-//        final ArrayList<Station> stations = new ArrayList<>();
-//        stations.add(station);
-//        stations.add(station1);
-//        writeList(stations);
-//        final List<Object> objects = readList(new Station());
-//        showList(objects);
-
-        readList()
+        Station station = new Station("qwe");
+        Petrol petrol = new Petrol("93", 123);
+        Petrol petrol1 = new Petrol("94", 123);
+        Petrol petrol2 = new Petrol("96", 123);
+        Petrol petrol3 = new Petrol("new", 123);
+        List<Petrol> petrols = new ArrayList<>();
+        petrols.add(petrol);
+        petrols.add(petrol1);
+        petrols.add(petrol2);
+        writeList(petrols);
+        final List<Petrol> petrols1 = readList(new Petrol());
+        System.out.println(showList(petrols1));
+        write(petrol3);
+        System.out.println();
+        System.out.println("new : \n\n");
+        final List<Petrol> petrols2 = readList(new Petrol());
+        System.out.println(showList(petrols2));
 
     }
 
-    public static<T> String showList(List<T> list) {
+    public static <T> String showList(List<T> list) {
         StringBuilder sb = new StringBuilder();
-        for(T tmp : list){
+        for (T tmp : list) {
             sb.append(tmp).append("\n");
         }
         return sb.toString();
