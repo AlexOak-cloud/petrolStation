@@ -8,24 +8,25 @@
 
 package petrolStation.serialization;
 
-
-import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
 import java.io.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Serialager {
     public static void main(String[] args) {
-        Station station = new Station("1");
-        Station station1 = new Station("2");
-        List<Station> stations = new ArrayList<>();
-        writeList(stations,TypeFile.STATION);
-        final List<Object> objects = readList(TypeFile.STATION);
-
-
+        Station station = new Station("3");
+        write(station,Repository.getFileStation());
+//        Station station = new Station("1");
+//        Station station1 = new Station("2");
+//        List<Station> list = new ArrayList<>();
+//        list.add(station);
+//        list.add(station1);
+        final List<Object> read = read(Repository.getFileStation());
+        System.out.println(showList(read));
 //        Petrol petrol = new Petrol("1", 11);
 //        Petrol petrol1 = new Petrol("2", 22);
 //        Petrol petrol2 = new Petrol("3", 33);
@@ -44,37 +45,33 @@ public class Serialager {
 //        System.out.println(showList(objects1));
     }
 
-
-    public static <T> void writeList(List<T> list, TypeFile typeFile) {
-        try (final ObjectOutputStream oos =
-                     new ObjectOutputStream(new FileOutputStream(InitFile.initFile(typeFile), true))) {
-            oos.writeObject(list);
-            oos.flush();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public static <T> void writeObject(T t,TypeFile typeFile){
-        try(final ObjectOutputStream oos =
-                    new ObjectOutputStream(new FileOutputStream(InitFile.initFile(typeFile)))){
-            final List<Object> objects = readList(typeFile);
-            objects.add(t);
-            writeList(objects,typeFile);
-        }catch (IOException ex){
-            ex.printStackTrace();
-        }
-    }
-
-    public static List<Object> readList(TypeFile typeFile) {
+    public static <T> List<T> read(File file) {
         try (final ObjectInputStream ois =
-                     new ObjectInputStream(new FileInputStream(InitFile.initFile(typeFile)))) {
-            return (List<Object>) ois.readObject();
-
-        } catch (IOException | ClassNotFoundException exception) {
-            exception.printStackTrace();
+                     new ObjectInputStream(new FileInputStream(file))) {
+            return (List<T>) ois.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
             return Collections.emptyList();
         }
+    }
+
+    public static <T> boolean writeList(List<T> list, File file) {
+        try (final ObjectOutputStream oos =
+                     new ObjectOutputStream(new FileOutputStream(file, true))) {
+            oos.writeObject(list);
+            oos.flush();
+            return true;
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+
+    public static <T> void write(T t, File file) {
+        final List<T> list = read(file);
+        list.add(t);
+        System.out.println(showList(list) +"\n\n");
+        writeList(list, file);
     }
 
     public static <T> String showList(List<T> list) {
