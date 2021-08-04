@@ -8,32 +8,19 @@
 
 package petrolStation.serialization;
 
-import petrolStation.model.Order;
 import petrolStation.model.Petrol;
-import petrolStation.model.Station;
 
 import java.io.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Serialager {
     public static void main(String[] args) {
-
-        Order order = new Order();
-        Order order1 = new Order();
-        List<Order> orders = new ArrayList<>();
-        orders.add(order1);
-        orders.add(order);
+        Petrol p = new Petrol("123",123);
+        write(p,Repository.getFileStation());
         final List<Object> read = read(Repository.getFilePetrol());
-        System.out.println(showList(read));
-        Order order2 = new Order();
-        write(order2,Repository.getFileOrder());
-        final List<Object> read1 = read(Repository.getFileOrder());
-        System.out.println(showList(read1));
-
-
+        System.out.println(read.size());
     }
 
     public static <T> List<T> read(File file) {
@@ -41,7 +28,7 @@ public class Serialager {
                      new ObjectInputStream(new FileInputStream(file))) {
             return (List<T>) ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
     }
 
@@ -59,6 +46,9 @@ public class Serialager {
 
     public static <T> void write(T t, File file) {
         List<T> list = read(file);
+        if(list == null){
+            list = new ArrayList<>();
+        }
         list.add(t);
         writeList(list, file);
     }

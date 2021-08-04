@@ -13,10 +13,21 @@ import java.io.IOException;
 
 public class Repository {
 
-    public static final File fileStation = new File("D:/PetrolStation/Stations.json");
-    public static final File filePetrol = new File("D:/PetrolStation/Petrol.json");
-    public static final File fileOrder = new File("D:/PetrolStation/Order.json");
+    private static final File fileStation = new File("D:/PetrolStation/Stations.json");
+    private static final File filePetrol = new File("D:/PetrolStation/Petrol.json");
+    private static final File fileOrder = new File("D:/PetrolStation/Order.json");
+    private static final File fileJoin = new File("D:/PetrolStation/Join.json");
 
+    public static File getFileJoin(){
+        try{
+            if(!fileJoin.exists()){
+                fileJoin.createNewFile();
+            }
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+        return fileJoin;
+    }
 
     public static File getFileStation() {
         try {
