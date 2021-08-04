@@ -25,7 +25,7 @@ public class Serialager {
 //        List<Station> list = new ArrayList<>();
 //        list.add(station);
 //        list.add(station1);
-        final List<Object> read = read(Repository.getFileStation());
+        List<Object> read = read(Repository.getFileStation());
         System.out.println(showList(read));
 //        Petrol petrol = new Petrol("1", 11);
 //        Petrol petrol1 = new Petrol("2", 22);
@@ -50,14 +50,13 @@ public class Serialager {
                      new ObjectInputStream(new FileInputStream(file))) {
             return (List<T>) ois.readObject();
         } catch (IOException | ClassNotFoundException ex) {
-            ex.printStackTrace();
             return Collections.emptyList();
         }
     }
 
     public static <T> boolean writeList(List<T> list, File file) {
         try (final ObjectOutputStream oos =
-                     new ObjectOutputStream(new FileOutputStream(file, true))) {
+                     new ObjectOutputStream(new FileOutputStream(file, false))) {
             oos.writeObject(list);
             oos.flush();
             return true;
@@ -68,10 +67,10 @@ public class Serialager {
     }
 
     public static <T> void write(T t, File file) {
-        final List<T> list = read(file);
+        List<T> list = read(file);
         list.add(t);
         System.out.println(showList(list) +"\n\n");
-        writeList(list, file);
+        System.out.println(writeList(list, file));
     }
 
     public static <T> String showList(List<T> list) {
