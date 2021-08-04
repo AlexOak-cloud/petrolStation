@@ -8,6 +8,8 @@
 
 package petrolStation.serialization;
 
+import petrolStation.model.Order;
+import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
 import java.io.*;
@@ -18,31 +20,20 @@ import java.util.List;
 
 public class Serialager {
     public static void main(String[] args) {
-        Station station = new Station("3");
-        write(station,Repository.getFileStation());
-//        Station station = new Station("1");
-//        Station station1 = new Station("2");
-//        List<Station> list = new ArrayList<>();
-//        list.add(station);
-//        list.add(station1);
-        List<Object> read = read(Repository.getFileStation());
+
+        Order order = new Order();
+        Order order1 = new Order();
+        List<Order> orders = new ArrayList<>();
+        orders.add(order1);
+        orders.add(order);
+        final List<Object> read = read(Repository.getFilePetrol());
         System.out.println(showList(read));
-//        Petrol petrol = new Petrol("1", 11);
-//        Petrol petrol1 = new Petrol("2", 22);
-//        Petrol petrol2 = new Petrol("3", 33);
-//        List<Petrol> listPetrol = new ArrayList<>();
-//        listPetrol.add(petrol);
-//        listPetrol.add(petrol1);
-//        listPetrol.add(petrol2);
-//        writeList(listPetrol, TypeFile.PETROL);
-//        final List<Object> objects = readList(TypeFile.PETROL);
-//        System.out.println(showList(objects));
-//        System.out.println();
-//        System.out.println("new\n\n");
-//        Petrol petrol3 = new Petrol("4",44);
-//        writeObject(petrol3,TypeFile.PETROL);
-//        final List<Petrol> objects1 = readList(TypeFile.PETROL);
-//        System.out.println(showList(objects1));
+        Order order2 = new Order();
+        write(order2,Repository.getFileOrder());
+        final List<Object> read1 = read(Repository.getFileOrder());
+        System.out.println(showList(read1));
+
+
     }
 
     public static <T> List<T> read(File file) {
@@ -69,8 +60,7 @@ public class Serialager {
     public static <T> void write(T t, File file) {
         List<T> list = read(file);
         list.add(t);
-        System.out.println(showList(list) +"\n\n");
-        System.out.println(writeList(list, file));
+        writeList(list, file);
     }
 
     public static <T> String showList(List<T> list) {
