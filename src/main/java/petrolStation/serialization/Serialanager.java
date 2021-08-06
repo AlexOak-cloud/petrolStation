@@ -15,12 +15,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Serialager {
+public class Serialanager {
     public static void main(String[] args) {
-        Petrol p = new Petrol("123",123);
-        write(p,Repository.getFileStation());
         final List<Object> read = read(Repository.getFilePetrol());
-        System.out.println(read.size());
+        System.out.println(showList(read));
     }
 
     public static <T> List<T> read(File file) {
