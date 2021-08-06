@@ -13,43 +13,47 @@ import java.util.List;
 
 public class AdminService {
 
+    private static StationDAO<Station> stationDAO = new StationDAO<>();
 
-    public static void createStation() {
+    public AdminService(StationDAO<Station> stationDAO) {
+        AdminService.stationDAO = stationDAO;
+    }
+
+    public static void create() {
         final String name = Reader.readString("Введите имя/номер новой станции\n0: Назад");
         if (name.equals("0")) {
             AdminMenu.adminMenu();
         }
-        StationDAO.createStation(new Station(name));
+        stationDAO.create(new Station(name));
     }
 
 
-    public static List<Station> getAllStations() {
-        return StationDAO.getAllStation();
-
+    public static List<Station> getAll() {
+        return stationDAO.getAll();
     }
 
 
     public static Station selectStation() {
-        final List<Station> allStations = getAllStations();
+        final List<Station> allStations = getAll();
         System.out.println(showListStations(allStations));
-        final int idStation = Reader.readInt
+        final int number = Reader.readInt
                 ("Выберите номер станции\n0: Назад", 0, allStations.size() + 1);
-        if (idStation == 0) {
+        if (number == 0) {
             AdminMenu.adminMenu();
         }
-        return allStations.get(idStation - 1);
+        return allStations.get(number - 1);
     }
 
 
     public static void deleteStation() {
-        final List<Station> allStation = StationDAO.getAllStation();
+        final List<Station> allStation = getAll();
         System.out.println(showListStations(allStation));
         final int number = Reader.readInt("Введите номер колонки(станции) для удаления",
                 0, allStation.size() + 1);
         if (number == 0) {
             AdminMenu.adminMenu();
         }
-        StationDAO.deleteStation(allStation.get(number - 1));
+        stationDAO.delete(allStation.get(number - 1));
     }
 
 

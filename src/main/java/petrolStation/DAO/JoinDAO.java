@@ -59,12 +59,4 @@ public class JoinDAO {
             exception.printStackTrace();
         }
     }
-
-    public static void updatePrice(int price, Petrol petrol) {
-        try {
-            DBConnector.getStatement().executeUpdate(String.format(SQLQuery.updatePrice, price, petrol.getName()));
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
 }

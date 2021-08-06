@@ -50,7 +50,7 @@ public class ClientService {
     }
 
     public static Station selectStation() {
-        final List<Station> allStations = AdminService.getAllStations();
+        final List<Station> allStations = AdminService.getAll();
         System.out.println(showListStations(allStations));
         final int idStation = Reader.readInt
                 ("Выберите номер станции\n0: Назад", 0, allStations.size() + 1);

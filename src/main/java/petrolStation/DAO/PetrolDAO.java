@@ -12,7 +12,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import petrolStation.model.Petrol;
-import petrolStation.model.Station;
 import petrolStation.util.DBConnector;
 import petrolStation.util.HibernateConfig;
 import petrolStation.util.SQLQuery;

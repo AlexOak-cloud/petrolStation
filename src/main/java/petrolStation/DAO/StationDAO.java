@@ -3,22 +3,22 @@ package petrolStation.DAO;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.slf4j.Logger;
 import petrolStation.model.Station;
 import petrolStation.util.HibernateConfig;
 
 import java.util.Collections;
 import java.util.List;
 
-public class StationDAO {
+public class StationDAO<T extends Station> implements DAO<T> {
+
 
     public static final Session stationSession = HibernateConfig.getSessionStation();
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(StationDAO.class);
 
-    public static void createStation(Station station) {
+    @Override
+    public void create(T t) {
         Transaction transaction = stationSession.beginTransaction();
         try {
-            stationSession.persist(station);
+            stationSession.persist(t);
             transaction.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -26,13 +26,13 @@ public class StationDAO {
         }
     }
 
-
-    public static List<Station> getAllStation() {
+    @Override
+    public List<T> getAll() {
         Transaction transaction = stationSession.beginTransaction();
         try {
             Query<Station> query = stationSession.createQuery
                     ("from Station", Station.class);
-            List<Station> resultList = query.getResultList();
+            List<T> resultList = (List<T>) query.getResultList();
             transaction.commit();
             return resultList;
         } catch (Exception ex) {
@@ -41,14 +41,20 @@ public class StationDAO {
         }
     }
 
-    public static void deleteStation(Station station) {
+    @Override
+    public void delete(T t) {
         Transaction transaction = stationSession.beginTransaction();
         try {
-            stationSession.delete(station);
+            stationSession.delete(t);
             transaction.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
             transaction.rollback();
         }
+    }
+
+    @Override
+    public T getById() {
+        return null;
     }
 }

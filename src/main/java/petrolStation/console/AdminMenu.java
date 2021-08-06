@@ -12,10 +12,10 @@ public class AdminMenu {
         while (true) {
             switch (answer) {
                 case 1:
-                    AdminService.createStation();
+                    AdminService.create();
                     adminMenu();
                 case 2:
-                    System.out.println(AdminService.showListStations(AdminService.getAllStations()));
+                    System.out.println(AdminService.showListStations(AdminService.getAll()));
                     adminMenu();
                 case 3:
                     final Station station = AdminService.selectStation();
