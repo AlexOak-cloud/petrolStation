@@ -8,24 +8,13 @@
 
 package petrolStation.serialization;
 
-import petrolStation.model.Join;
-import petrolStation.model.Order;
-import petrolStation.model.Petrol;
-import petrolStation.model.Station;
-
 import java.io.*;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Serialanager {
-        // Petrol_TEST -> complete
-        // Station_TEST -> complete
-        // Order_TEST -> complete
-        // Join_TEST -> complete
-
-    public static <T> List<T> read(File file) {
+public class SerialazerImpl implements Serialazer {
+    @Override
+    public <T> List<T> read(File file) {
         try (final ObjectInputStream ois =
                      new ObjectInputStream(new FileInputStream(file))) {
             return (List<T>) ois.readObject();
@@ -34,7 +23,8 @@ public class Serialanager {
         }
     }
 
-    public static <T> boolean writeList(List<T> list, File file) {
+    @Override
+    public <T> boolean writeList(List<T> list, File file) {
         try (final ObjectOutputStream oos =
                      new ObjectOutputStream(new FileOutputStream(file, false))) {
             oos.writeObject(list);
@@ -46,22 +36,13 @@ public class Serialanager {
         }
     }
 
-    public static <T> boolean write(T t, File file) {
-        List<T> list = read(file);
+    @Override
+    public <T> boolean write(T t, File file) {
+        List<T> list = this.read(file);
         if(list == null){
             list = new ArrayList<>();
         }
         list.add(t);
         return writeList(list, file);
     }
-
-    public static <T> String showList(List<T> list) {
-        StringBuilder sb = new StringBuilder();
-        for (Object tmp : list) {
-            sb.append(tmp).append("\n");
-        }
-        return sb.toString();
-    }
 }
-
-
