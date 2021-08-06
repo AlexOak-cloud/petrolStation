@@ -8,18 +8,22 @@
 
 package petrolStation.serialization;
 
+import petrolStation.model.Join;
+import petrolStation.model.Order;
 import petrolStation.model.Petrol;
+import petrolStation.model.Station;
 
 import java.io.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Serialanager {
-    public static void main(String[] args) {
-        final List<Object> read = read(Repository.getFilePetrol());
-        System.out.println(showList(read));
-    }
+        // Petrol_TEST -> complete
+        // Station_TEST -> complete
+        // Order_TEST -> complete
+        // Join_TEST -> complete
 
     public static <T> List<T> read(File file) {
         try (final ObjectInputStream ois =
@@ -42,13 +46,13 @@ public class Serialanager {
         }
     }
 
-    public static <T> void write(T t, File file) {
+    public static <T> boolean write(T t, File file) {
         List<T> list = read(file);
         if(list == null){
             list = new ArrayList<>();
         }
         list.add(t);
-        writeList(list, file);
+        return writeList(list, file);
     }
 
     public static <T> String showList(List<T> list) {
