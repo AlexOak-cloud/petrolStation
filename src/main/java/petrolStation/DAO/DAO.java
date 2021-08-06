@@ -22,7 +22,7 @@ public interface DAO<T> {
 
     void delete(T t);
 
-    T getById();
+    T getById(int id);
 
 
 }

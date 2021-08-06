@@ -54,7 +54,16 @@ public class StationDAO<T extends Station> implements DAO<T> {
     }
 
     @Override
-    public T getById() {
-        return null;
+    public T getById(int id) {
+        Transaction transaction = stationSession.beginTransaction();
+        try {
+            final T rtnSession = (T) stationSession.get(Station.class, id);
+            transaction.commit();
+            return rtnSession;
+        } catch (Exception ex){
+            ex.printStackTrace();
+            transaction.rollback();
+            return null;
+        }
     }
 }

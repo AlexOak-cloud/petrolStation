@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-public class PetrolDAO {
+public class PetrolDAO<T extends Petrol> implements DAO<T extends Petrol> {
 
     public static final Session petrolSession = HibernateConfig.getSessionPetrol();
 
