@@ -20,7 +20,7 @@ public class ManagerService {
 
 
     public static void updatePetrolPrice() {
-        List<Petrol> allPetrol = PetrolDAO.getAllPetrol();
+        List<Petrol> allPetrol = PetrolDAO.getAll();
         System.out.println(AdminService.showListPetrol(allPetrol));
         final int number = Reader.readInt
                 ("Выберите номер топлива для изменения стоимости\n0: Назад", 0, allPetrol.size() + 1);

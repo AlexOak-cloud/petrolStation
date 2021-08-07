@@ -14,10 +14,13 @@ import java.util.List;
 public class AdminService {
 
     private static StationDAO<Station> stationDAO = new StationDAO<>();
+    private static PetrolDAO<Petrol> petrolDAO = new PetrolDAO<>();
 
     public AdminService(StationDAO<Station> stationDAO) {
         AdminService.stationDAO = stationDAO;
     }
+
+
 
     public static void create() {
         final String name = Reader.readString("Введите имя/номер новой станции\n0: Назад");
@@ -58,13 +61,13 @@ public class AdminService {
 
 
     public static void join(Station s) {
-        System.out.println(showListPetrol(PetrolDAO.getAllPetrol()));
+        System.out.println(showListPetrol(petrolDAO.getAll()));
         final int idPetrol = Reader.readInt
                 ("Введите номер топлива для добавления\n0: Назад", 0, 4);
         if (idPetrol == 0) {
             AdminMenu.selectStation(s);
         }
-        JoinDAO.join(s, PetrolDAO.getPetrolById(idPetrol));
+        JoinDAO.join(s, petrolDAO.getById(idPetrol));
     }
 
 

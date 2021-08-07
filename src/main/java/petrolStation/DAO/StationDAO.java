@@ -32,9 +32,9 @@ public class StationDAO<T extends Station> implements DAO<T> {
         try {
             Query<Station> query = stationSession.createQuery
                     ("from Station", Station.class);
-            List<T> resultList = (List<T>) query.getResultList();
+            List<Station> resultList =  query.getResultList();
             transaction.commit();
-            return resultList;
+            return (List<T>) resultList;
         } catch (Exception ex) {
             transaction.rollback();
             return Collections.emptyList();
@@ -57,13 +57,13 @@ public class StationDAO<T extends Station> implements DAO<T> {
     public T getById(int id) {
         Transaction transaction = stationSession.beginTransaction();
         try {
-            final T rtnSession = (T) stationSession.get(Station.class, id);
+            final Station station = stationSession.get(Station.class, id);
             transaction.commit();
-            return rtnSession;
-        } catch (Exception ex){
+            return (T) station;
+        } catch (Exception ex) {
             ex.printStackTrace();
             transaction.rollback();
-            return null;
+            return (T) new Station();
         }
     }
 }

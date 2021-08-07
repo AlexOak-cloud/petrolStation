@@ -7,7 +7,7 @@ import java.util.List;
 public class DoIt {
 
     public static void main(String[] args) {
-        AdminService.create();
+        AdminService.selectStation();
     }
 
     public static <T> String showList(List<T> list) {

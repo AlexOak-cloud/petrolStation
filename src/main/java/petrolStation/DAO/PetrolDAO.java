@@ -20,35 +20,44 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-public class PetrolDAO<T extends Petrol> implements DAO<T extends Petrol> {
+public class PetrolDAO<T extends Petrol> implements DAO<T> {
 
     public static final Session petrolSession = HibernateConfig.getSessionPetrol();
 
 
-    public static List<Petrol> getAllPetrol() {
+    @Override
+    public void create(T t) {
+    }
+
+    public List<T> getAll() {
         Transaction transaction = petrolSession.beginTransaction();
         try {
             Query<Petrol> fromPetrol = petrolSession.createQuery
                     ("from Petrol", Petrol.class);
             List<Petrol> resultList = fromPetrol.getResultList();
             transaction.commit();
-            return resultList;
+            return (List<T>) resultList;
         } catch (Exception ex) {
             ex.printStackTrace();
             return Collections.emptyList();
         }
     }
 
+    @Override
+    public void delete(T t) {
 
-    public static Petrol getPetrolById(int id) {
+    }
+
+    @Override
+    public T getById(int id) {
         Transaction transaction = petrolSession.beginTransaction();
         try {
             Petrol petrol = petrolSession.get(Petrol.class, id);
             transaction.commit();
-            return petrol;
+            return (T)petrol;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return new Petrol();
+            return (T)new Petrol();
         }
     }
 

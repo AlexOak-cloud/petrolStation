@@ -23,6 +23,4 @@ public interface DAO<T> {
     void delete(T t);
 
     T getById(int id);
-
-
 }
