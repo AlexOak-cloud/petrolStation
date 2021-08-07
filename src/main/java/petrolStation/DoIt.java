@@ -1,13 +1,11 @@
 package petrolStation;
 
-import petrolStation.services.AdminService;
-
 import java.util.List;
 
 public class DoIt {
 
     public static void main(String[] args) {
-        AdminService.selectStation();
+
     }
 
     public static <T> String showList(List<T> list) {

@@ -8,20 +8,21 @@
 
 package petrolStation.model;
 
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
+
 
 public class Join implements Serializable {
 
-    private int id_station;
-    private List<Petrol> listPetrol;
+    private int idStation;
+    private int idPetrol;
 
     @Override
     public String toString() {
         return "Join{" +
-                "id_station=" + id_station +
-                ", listPetrol=" + listPetrol +
+                "idStation=" + idStation +
+                ", idPetrol=" + idPetrol +
                 '}';
     }
 
@@ -30,27 +31,27 @@ public class Join implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Join join = (Join) o;
-        return id_station == join.id_station && Objects.equals(listPetrol, join.listPetrol);
+        return idStation == join.idStation && idPetrol == join.idPetrol;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_station, listPetrol);
+        return Objects.hash(idStation, idPetrol);
     }
 
-    public int getId_station() {
-        return id_station;
+    public int getIdStation() {
+        return idStation;
     }
 
-    public List<Petrol> getListPetrol() {
-        return listPetrol;
+    public int getIdPetrol() {
+        return idPetrol;
     }
 
     public Join() {
     }
 
-    public Join(int id_station, List<Petrol> listPetrol) {
-        this.id_station = id_station;
-        this.listPetrol = listPetrol;
+    public Join(int idStation, int idPetrol) {
+        this.idStation = idStation;
+        this.idPetrol = idPetrol;
     }
 }

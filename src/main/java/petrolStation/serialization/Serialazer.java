@@ -9,13 +9,55 @@
 package petrolStation.serialization;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public interface Serialazer {
+public class Serialazer implements Serialanager {
 
-    <T> List<T> read(File file) ;
+    private static final Serialazer serialazer = new Serialazer();
 
-    <T> boolean writeList(List<T> list, File file);
+    public static Serialazer action() {
+        return serialazer;
+    }
 
-    <T> boolean write(T t, File file);
+    @Override
+    public <T> List<T> read(File file) {
+        try (final ObjectInputStream ois =
+                     new ObjectInputStream(new FileInputStream(file))) {
+            return (List<T>) ois.readObject();
+        } catch (IOException | ClassNotFoundException ex) {
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public <T> boolean writeList(List<T> list, File file) {
+        try (final ObjectOutputStream oos =
+                     new ObjectOutputStream(new FileOutputStream(file, false))) {
+            oos.writeObject(list);
+            oos.flush();
+            return true;
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public <T> boolean write(T t, File file) {
+        List<T> list = this.read(file);
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+        list.add(t);
+        return writeList(list, file);
+    }
+
+    @Override
+    public <T> void delete(T t, File file) {
+        List<T> list = this.read(file);
+        list.removeIf(t::equals);
+        this.writeList(list,file);
+    }
 }

@@ -1,5 +1,6 @@
 package petrolStation.services;
 
+import com.sun.corba.se.impl.orbutil.RepositoryIdStrings;
 import petrolStation.DAO.OrderDAO;
 import petrolStation.console.ClientMenu;
 import petrolStation.console.ManagerMenu;
@@ -7,6 +8,8 @@ import petrolStation.console.Reader;
 import petrolStation.model.Order;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
+import petrolStation.serialization.Repository;
+import petrolStation.serialization.Serialazer;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +19,7 @@ import static petrolStation.services.AdminService.showListStations;
 public class ClientService {
 
     public static void newOrder() {
+        Order order;
         final Station stationById = selectStation();
         final List<Petrol> petrolList = AdminService.showJoin(stationById);
         final Petrol petrol = selectPetrol(petrolList);
@@ -27,14 +31,16 @@ public class ClientService {
             ManagerMenu.managerMenu();
         } else if (answer == 1) {
             final double sum = newOrderBySum(petrol);
-            final Order order = new Order(petrol.getName(), sum, sum / petrol.getPrice(), LocalDateTime.now());
+            order = new Order(petrol.getName(), sum, sum / petrol.getPrice(), LocalDateTime.now());
             OrderDAO.action().create(order);
+            Serialazer.action().write(order, Repository.getFileOrder());
             System.out.println("Успешно!");
             System.out.println("Чек: " + order);
         } else if (answer == 2) {
             final double quantity = newOrderByQuantity(petrol);
-            final Order order = new Order(petrol.getName(), quantity * petrol.getPrice(), quantity, LocalDateTime.now());
+            order = new Order(petrol.getName(), quantity * petrol.getPrice(), quantity, LocalDateTime.now());
             OrderDAO.action().create(order);
+            Serialazer.action().write(order, Repository.getFileOrder());
             System.out.println("Успешно!");
             System.out.println("Чек: " + order);
         }

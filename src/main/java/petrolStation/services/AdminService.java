@@ -7,6 +7,8 @@ import petrolStation.console.Reader;
 import petrolStation.DAO.StationDAO;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
+import petrolStation.serialization.Repository;
+import petrolStation.serialization.Serialazer;
 
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +20,9 @@ public class AdminService {
         if (name.equals("0")) {
             AdminMenu.adminMenu();
         }
-        StationDAO.action().create(new Station(name));
+        Station station = new Station(name);
+        StationDAO.action().create(station);
+        Serialazer.action().write(station, Repository.getFileStation());
     }
 
 
@@ -47,7 +51,9 @@ public class AdminService {
         if (number == 0) {
             AdminMenu.adminMenu();
         }
-        StationDAO.action().delete(allStation.get(number - 1));
+        Station station = allStation.get(number-1);
+        StationDAO.action().delete(station);
+        Serialazer.action().delete(station,Repository.getFileStation());
     }
 
 

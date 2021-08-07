@@ -7,6 +7,8 @@ import petrolStation.console.Reader;
 import petrolStation.model.Order;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
+import petrolStation.serialization.Repository;
+import petrolStation.serialization.Serialazer;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -66,6 +68,7 @@ public class ManagerService {
 
 
     public static void newOrder() {
+        Order order;
         final Station stationById = selectStation();
         final List<Petrol> petrolList = AdminService.showJoin(stationById);
         final Petrol petrol = selectPetrol(petrolList);
@@ -77,21 +80,22 @@ public class ManagerService {
             ManagerMenu.managerMenu();
         } else if (answer == 1) {
             double sum = newOrderBySum(petrol);
-            final Order order = new Order(petrol.getName(),
+            order = new Order(petrol.getName(),
                     sum,
                     sum / petrol.getPrice(),
                     LocalDateTime.now());
             OrderDAO.action().create(order);
-
+            Serialazer.action().write(order, Repository.getFileOrder());
             System.out.println("Успешно!");
             System.out.println("Чек: " + order);
         } else if (answer == 2) {
             final double quantity = newOrderByQuantity(petrol);
-            final Order order = new Order(petrol.getName(),
+            order = new Order(petrol.getName(),
                     quantity * petrol.getPrice(),
                     quantity,
                     LocalDateTime.now());
             OrderDAO.action().create(order);
+            Serialazer.action().write(order, Repository.getFileOrder());
             System.out.println("Успешно!");
             System.out.println("Чек: " + order);
 
@@ -117,6 +121,8 @@ public class ManagerService {
         if (number == 0) {
             ManagerMenu.managerMenu();
         }
-        OrderDAO.action().delete(orders.get(number - 1));
+        Order order = orders.get(number - 1);
+        OrderDAO.action().delete(order);
+        Serialazer.action().write(order,Repository.getFileOrder());
     }
 }
