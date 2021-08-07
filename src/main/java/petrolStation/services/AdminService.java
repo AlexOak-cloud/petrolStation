@@ -47,7 +47,7 @@ public class AdminService {
         if (number == 0) {
             AdminMenu.adminMenu();
         }
-        StatationDAO.delete(allStation.get(number - 1));
+        StationDAO.action().delete(allStation.get(number - 1));
     }
 
 

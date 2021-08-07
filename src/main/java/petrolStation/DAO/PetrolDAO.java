@@ -22,7 +22,7 @@ import java.util.List;
 
 public class PetrolDAO<T extends Petrol> implements DAO<T> {
 
-    public static final Session petrolSession = HibernateConfig.getSessionPetrol();
+    public static final Session session = HibernateConfig.getSessionPetrol();
 
     private static final PetrolDAO<Petrol> petrolDAO = new PetrolDAO<>();
 
@@ -36,9 +36,9 @@ public class PetrolDAO<T extends Petrol> implements DAO<T> {
     }
 
     public List<T> getAll() {
-        Transaction transaction = petrolSession.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         try {
-            Query<Petrol> fromPetrol = petrolSession.createQuery
+            Query<Petrol> fromPetrol = session.createQuery
                     ("from Petrol", Petrol.class);
             List<Petrol> resultList = fromPetrol.getResultList();
             transaction.commit();
@@ -56,9 +56,9 @@ public class PetrolDAO<T extends Petrol> implements DAO<T> {
 
     @Override
     public T getById(int id) {
-        Transaction transaction = petrolSession.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         try {
-            Petrol petrol = petrolSession.get(Petrol.class, id);
+            Petrol petrol = session.get(Petrol.class, id);
             transaction.commit();
             return (T)petrol;
         } catch (Exception ex) {

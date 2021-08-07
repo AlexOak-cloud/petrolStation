@@ -8,17 +8,12 @@ import petrolStation.model.Order;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 
-import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static petrolStation.services.AdminService.showListStations;
 
 public class ManagerService {
-
-
-    static DecimalFormat df = new DecimalFormat("#.##");
-
 
     public static void updatePetrolPrice() {
         List<Petrol> allPetrol = PetrolDAO.action().getAll();

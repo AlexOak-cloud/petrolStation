@@ -20,9 +20,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class JoinDAO {
-
-
-
     public static void join(Station station, Petrol petrol) {
         try {
             DBConnector.getStatement().executeUpdate

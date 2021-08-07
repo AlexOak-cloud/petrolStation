@@ -12,8 +12,7 @@ import java.util.List;
 public class StationDAO<T extends Station> implements DAO<T> {
 
 
-    public static final Session stationSession = HibernateConfig.getSessionStation();
-
+    public static final Session session = HibernateConfig.getSessionStation();
     private static final StationDAO<Station> stationDAO = new StationDAO<>();
 
     public static StationDAO<Station> action(){
@@ -22,9 +21,9 @@ public class StationDAO<T extends Station> implements DAO<T> {
 
     @Override
     public void create(T t) {
-        Transaction transaction = stationSession.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         try {
-            stationSession.persist(t);
+            session.persist(t);
             transaction.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -34,9 +33,9 @@ public class StationDAO<T extends Station> implements DAO<T> {
 
     @Override
     public List<T> getAll() {
-        Transaction transaction = stationSession.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         try {
-            Query<Station> query = stationSession.createQuery
+            Query<Station> query = session.createQuery
                     ("from Station", Station.class);
             List<Station> resultList =  query.getResultList();
             transaction.commit();
@@ -49,9 +48,9 @@ public class StationDAO<T extends Station> implements DAO<T> {
 
     @Override
     public void delete(T t) {
-        Transaction transaction = stationSession.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         try {
-            stationSession.delete(t);
+            session.delete(t);
             transaction.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -61,9 +60,9 @@ public class StationDAO<T extends Station> implements DAO<T> {
 
     @Override
     public T getById(int id) {
-        Transaction transaction = stationSession.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         try {
-            final Station station = stationSession.get(Station.class, id);
+            final Station station = session.get(Station.class, id);
             transaction.commit();
             return (T) station;
         } catch (Exception ex) {
