@@ -24,6 +24,12 @@ public class PetrolDAO<T extends Petrol> implements DAO<T> {
 
     public static final Session petrolSession = HibernateConfig.getSessionPetrol();
 
+    private static final PetrolDAO<Petrol> petrolDAO = new PetrolDAO<>();
+
+    public static PetrolDAO<Petrol> action(){
+        return petrolDAO;
+    }
+
 
     @Override
     public void create(T t) {

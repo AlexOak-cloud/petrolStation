@@ -14,6 +14,12 @@ public class StationDAO<T extends Station> implements DAO<T> {
 
     public static final Session stationSession = HibernateConfig.getSessionStation();
 
+    private static final StationDAO<Station> stationDAO = new StationDAO<>();
+
+    public static StationDAO<Station> action(){
+        return stationDAO;
+    }
+
     @Override
     public void create(T t) {
         Transaction transaction = stationSession.beginTransaction();

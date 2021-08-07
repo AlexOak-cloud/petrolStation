@@ -15,7 +15,6 @@ import static petrolStation.services.AdminService.showListStations;
 
 public class ClientService {
 
-
     public static void newOrder() {
         final Station stationById = selectStation();
         final List<Petrol> petrolList = AdminService.showJoin(stationById);
@@ -29,13 +28,13 @@ public class ClientService {
         } else if (answer == 1) {
             final double sum = newOrderBySum(petrol);
             final Order order = new Order(petrol.getName(), sum, sum / petrol.getPrice(), LocalDateTime.now());
-            OrderDAO.add(order);
+            OrderDAO.action().create(order);
             System.out.println("Успешно!");
             System.out.println("Чек: " + order);
         } else if (answer == 2) {
             final double quantity = newOrderByQuantity(petrol);
             final Order order = new Order(petrol.getName(), quantity * petrol.getPrice(), quantity, LocalDateTime.now());
-            OrderDAO.add(order);
+            OrderDAO.action().create(order);
             System.out.println("Успешно!");
             System.out.println("Чек: " + order);
         }

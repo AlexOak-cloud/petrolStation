@@ -9,7 +9,7 @@ public class OrderService {
 
 
     public static List<Order> showOrders() {
-        final List<Order> allOrders = OrderDAO.getAllOrders();
+        final List<Order> allOrders = OrderDAO.action().getAll();
         int number = 1;
         for (Order tmp : allOrders) {
             System.out.println(number +

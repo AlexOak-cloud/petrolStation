@@ -9,14 +9,21 @@ import petrolStation.util.HibernateConfig;
 import java.util.Collections;
 import java.util.List;
 
-public class OrderDAO {
+public class OrderDAO<T extends Order> implements DAO<T> {
 
-    public static final Session session = HibernateConfig.getSessionOrder();
+    private static final Session session = HibernateConfig.getSessionOrder();
 
-    public static void add(Order order) {
+    private static final OrderDAO<Order> orderDAO = new OrderDAO<>();
+
+    public static OrderDAO<Order> action(){
+        return orderDAO;
+    }
+
+    @Override
+    public void create(T t) {
         Transaction transaction = session.beginTransaction();
         try {
-            session.persist(order);
+            session.persist(t);
             transaction.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -24,12 +31,13 @@ public class OrderDAO {
         }
     }
 
-    public static List<Order> getAllOrders() {
+    @Override
+    public List<T> getAll() {
         Transaction transaction = session.beginTransaction();
         try {
             final Query<Order> orderQuery = session.createQuery("from Order", Order.class);
             transaction.commit();
-            return orderQuery.getResultList();
+            return (List<T>) orderQuery.getResultList();
         } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
@@ -37,16 +45,29 @@ public class OrderDAO {
         }
     }
 
-    public static void deleteOrder(Order order){
+    @Override
+    public void delete(T t) {
         Transaction transaction = session.beginTransaction();
-        try{
-            session.delete(order);
+        try {
+            session.delete(t);
             transaction.commit();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             transaction.rollback();
             ex.printStackTrace();
         }
     }
 
-
+    @Override
+    public T getById(int id) {
+        Transaction transaction = session.beginTransaction();
+        try {
+            final Order order = session.get(Order.class, id);
+            transaction.commit();
+            return (T) order;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            transaction.rollback();
+            return (T) new Order();
+        }
+    }
 }

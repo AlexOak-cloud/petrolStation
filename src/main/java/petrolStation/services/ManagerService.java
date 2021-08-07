@@ -16,11 +16,12 @@ import static petrolStation.services.AdminService.showListStations;
 
 public class ManagerService {
 
+
     static DecimalFormat df = new DecimalFormat("#.##");
 
 
     public static void updatePetrolPrice() {
-        List<Petrol> allPetrol = PetrolDAO.getAll();
+        List<Petrol> allPetrol = PetrolDAO.action().getAll();
         System.out.println(AdminService.showListPetrol(allPetrol));
         final int number = Reader.readInt
                 ("Выберите номер топлива для изменения стоимости\n0: Назад", 0, allPetrol.size() + 1);
@@ -85,7 +86,7 @@ public class ManagerService {
                     sum,
                     sum / petrol.getPrice(),
                     LocalDateTime.now());
-            OrderDAO.add(order);
+            OrderDAO.action().create(order);
 
             System.out.println("Успешно!");
             System.out.println("Чек: " + order);
@@ -95,7 +96,7 @@ public class ManagerService {
                     quantity * petrol.getPrice(),
                     quantity,
                     LocalDateTime.now());
-            OrderDAO.add(order);
+            OrderDAO.action().create(order);
             System.out.println("Успешно!");
             System.out.println("Чек: " + order);
 
@@ -121,6 +122,6 @@ public class ManagerService {
         if (number == 0) {
             ManagerMenu.managerMenu();
         }
-        OrderDAO.deleteOrder(orders.get(number - 1));
+        OrderDAO.action().delete(orders.get(number - 1));
     }
 }
