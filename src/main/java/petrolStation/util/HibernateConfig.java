@@ -2,6 +2,7 @@ package petrolStation.util;
 
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
+import petrolStation.model.Join;
 import petrolStation.model.Order;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
@@ -28,6 +29,13 @@ public class HibernateConfig {
         configuration.addProperties(getProps());
         configuration.addAnnotatedClass(Order.class);
         return configuration.buildSessionFactory().openSession();
+    }
+    public static Session getSessionJoin(){
+        Configuration configuration = new Configuration();
+        configuration.addProperties(getProps());
+        configuration.addAnnotatedClass(Join.class);
+        return configuration.buildSessionFactory().openSession();
+
     }
 
 

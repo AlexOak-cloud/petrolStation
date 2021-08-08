@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import petrolStation.model.Station;
+import petrolStation.serialization.Serialazer;
 import petrolStation.util.HibernateConfig;
 
 import java.util.Collections;

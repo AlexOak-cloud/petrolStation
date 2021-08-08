@@ -8,9 +8,14 @@
 
 package petrolStation.DAO;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import petrolStation.model.Join;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 import petrolStation.util.DBConnector;
+import petrolStation.util.HibernateConfig;
 import petrolStation.util.SQLQuery;
 
 import java.sql.ResultSet;
@@ -19,13 +24,67 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class JoinDAO {
-    public static void join(Station station, Petrol petrol) {
+
+public class JoinDAO<T extends Join> implements DAO<T> {
+
+    private static final Session session = HibernateConfig.getSessionJoin();
+
+    private static final JoinDAO<Join> joinDAO = new JoinDAO<>();
+
+    public static JoinDAO<Join> action() {
+        return joinDAO;
+    }
+
+    @Override
+    public  void create(T t) {
+        Transaction transaction = session.beginTransaction();
         try {
-            DBConnector.getStatement().executeUpdate
-                    (String.format(SQLQuery.forJoining, station.getId(), petrol.getId()));
-        } catch (SQLException ex) {
+            session.persist(t);
+            transaction.commit();
+        }catch (Exception ex){
             ex.printStackTrace();
+            transaction.rollback();
+        }
+    }
+
+    @Override
+    public List<T> getAll(){
+        Transaction transaction = session.beginTransaction();
+        try{
+            Query query = session.createQuery("from Join",Join.class);
+            List<Join> rtnList = query.getResultList();
+            transaction.commit();
+            return (List<T>) rtnList;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            transaction.rollback();
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public void delete(T t) {
+        Transaction transaction = session.beginTransaction();
+        try{
+            session.delete(t);
+            transaction.commit();
+        }catch (Exception ex){
+            ex.printStackTrace();
+            transaction.rollback();
+        }
+    }
+
+    @Override
+    public T getById(int id) {
+        Transaction transaction = session.beginTransaction();
+        try{
+            final Join join = session.get(Join.class, id);
+            transaction.commit();
+            return (T) join;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            transaction.rollback();
+            return (T) new Join();
         }
     }
 

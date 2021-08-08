@@ -5,6 +5,7 @@ import petrolStation.DAO.PetrolDAO;
 import petrolStation.console.AdminMenu;
 import petrolStation.console.Reader;
 import petrolStation.DAO.StationDAO;
+import petrolStation.model.Join;
 import petrolStation.model.Petrol;
 import petrolStation.model.Station;
 import petrolStation.serialization.Repository;
@@ -58,13 +59,16 @@ public class AdminService {
 
 
     public static void join(Station s) {
-        System.out.println(showListPetrol(PetrolDAO.action().getAll()));
-        final int idPetrol = Reader.readInt
-                ("Введите номер топлива для добавления\n0: Назад", 0, 4);
-        if (idPetrol == 0) {
+        final List<Petrol> allPetrol = PetrolDAO.action().getAll();
+        System.out.println(showListPetrol(allPetrol));
+        final int number = Reader.readInt
+                ("Выберите номер топлива для добавления\n0: Назад", 0, 4);
+        if (number == 0) {
             AdminMenu.selectStation(s);
         }
-        JoinDAO.join(s, PetrolDAO.action().getById(idPetrol));
+        Join join = new Join(s.getId(),allPetrol.get(number -1).getId());
+        JoinDAO.action().create(join);
+        Serialazer.action().write(join,Repository.getFileJoin());
     }
 
 

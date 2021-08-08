@@ -8,14 +8,20 @@
 
 package petrolStation.model;
 
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "Petrol_station")
 public class Join implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @Column(name = "id_station")
     private int idStation;
+    @Column(name = "id_petrol")
     private int idPetrol;
 
     @Override
