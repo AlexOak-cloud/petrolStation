@@ -13,7 +13,7 @@ public interface SQLQuery {
             "where stations.id = %d;";
     String showPetrolByStation = "SELECT petrol.id, petrol.name, petrol.price " +
             "FROM petrol " +
-             "JOIN petrol_station " +
+            "JOIN petrol_station " +
             "ON petrol.id = petrol_station.id_petrol " +
             "WHERE petrol_station.id_station = %d;";
     String updatePrice = "update petrol set price = %d where name = '%s';";
