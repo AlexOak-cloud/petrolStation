@@ -45,13 +45,13 @@ public class Serialazer implements Serialanager {
     }
 
     @Override
-    public <T> boolean write(T t, File file) {
+    public <T> void write(T t, File file) {
         List<T> list = this.read(file);
         if (list == null) {
             list = new ArrayList<>();
         }
         list.add(t);
-        return writeList(list, file);
+        writeList(list, file);
     }
 
     @Override
