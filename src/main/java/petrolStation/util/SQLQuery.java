@@ -1,6 +1,6 @@
 package petrolStation.util;
 
-public interface SQLQuery {
+public interface SQLQuery { 
 
     String forJoining = "insert into petrol_station (id_station, id_petrol) values (%d, %d);";
     String deletePetrol = "DELETE FROM petrol_station WHERE id_station = %d AND id_petrol = %d;";
