@@ -35,7 +35,7 @@ public class Station implements Serializable {
 
     @Override
     public String toString() {
-        return "Station( " + name + " )";
+        return "Station (" + name + ")";
 
     }
 
